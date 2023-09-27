@@ -10,23 +10,27 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Big_Chass extends LinearOpMode {
     Servo ClawServo;
     Servo LaunchSwitch;
+    Servo LaunchRaiser;
     DcMotor BackR;
     DcMotor FrontR;
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor UpArm2;
     DcMotor UpArm;
-    DcMotor ExpandArm
+    DcMotor ExpandArm;
 
      //This function is executed when this Op Mode is selected from the Driver Station.
     @Override
     public void runOpMode() {
+
+        //all variables for motion and assign Servo/DcMotor variable to the motor of the same name
         float vertical;
         float strafe;
         float turn;
 
         ClawServo = hardwareMap.get(Servo.class, "Claw Servo");
         LaunchSwitch = hardwareMap.get(Servo.class,"LaunchSwitch");
+        LaunchRaiser = hardwareMap.get(Servo.class,"LaunchRaiser");
         BackR = hardwareMap.get(DcMotor.class, "BackR");
         FrontR = hardwareMap.get(DcMotor.class, "FrontR");
         FrontL = hardwareMap.get(DcMotor.class, "FrontL");
@@ -68,9 +72,12 @@ public class Big_Chass extends LinearOpMode {
                 UpArm2.setPower(gamepad2.left_stick_y);
                 ExpandArm.setPower(gamepad2.right_stick_y);
 
-                // Close claw = Gamepad 2's Left Bumper
-                // Open claw = Gamepad 2's Right Bumper
+                // Close claw = Gaming Pad 2's Left Bumper
+                // Open claw = Gaming Pad 2's Right Bumper
                 // 0-1 on a line. 0 = Left & 1 = Right (Theoretically, so use a tape marker to test the placement)
+                //A = FLick drone launcher switch
+                //B = Flick drone launch switch to original position
+                //C = activate the lever to raise the drone launcher in a 45 degree angle
                 if (gamepad2.left_bumper) {
                     ClawServo.setPosition(0.2);
                 }
@@ -78,10 +85,10 @@ public class Big_Chass extends LinearOpMode {
                     ClawServo.setPosition(0);
                 }
                 if(gamepad2.a){
-                    LaunchSwitch.setPosition(1);
+                    LaunchSwitch.setPosition(0.08);
                 }
                 if(gamepad2.b){
-                    LaunchSwitch.setPosition(0);
+                    LaunchRaiser.setPosition(1);
                 }
                 telemetry.update();
             }
