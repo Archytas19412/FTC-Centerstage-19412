@@ -47,7 +47,6 @@ public class Big_Chass extends LinearOpMode {
             // Put run blocks here.
             BackR.setDirection(DcMotorSimple.Direction.REVERSE);
             FrontR.setDirection(DcMotorSimple.Direction.REVERSE);
-            FrontL.setDirection(DcMotorSimple.Direction.FORWARD);
             BackL.setDirection(DcMotorSimple.Direction.REVERSE);
             UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
             while (opModeIsActive()) {
