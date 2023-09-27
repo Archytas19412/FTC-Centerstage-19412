@@ -16,11 +16,9 @@ public class Big_Chass extends LinearOpMode {
     DcMotor BackL;
     DcMotor UpArm2;
     DcMotor UpArm;
-    DcMotor ExpandArm;
+    DcMotor ExpandArm
 
-    /**
-     * This function is executed when this Op Mode is selected from the Driver Station.
-     */
+     //This function is executed when this Op Mode is selected from the Driver Station.
     @Override
     public void runOpMode() {
         float vertical;
@@ -41,6 +39,7 @@ public class Big_Chass extends LinearOpMode {
         ClawServo.setPosition(0);
         waitForStart();
         if (opModeIsActive()) {
+
             // Put run blocks here.
             BackR.setDirection(DcMotorSimple.Direction.REVERSE);
             FrontR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -48,6 +47,7 @@ public class Big_Chass extends LinearOpMode {
             BackL.setDirection(DcMotorSimple.Direction.REVERSE);
             UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
             while (opModeIsActive()) {
+
                 // Put loop blocks here.
                 // Forward/backwards = Gamepad 1's Left stick (Up and down)
                 // Strafe = Gamepad 1's Left stick (Left and right)
@@ -55,6 +55,7 @@ public class Big_Chass extends LinearOpMode {
                 vertical = gamepad1.left_stick_y;
                 strafe = gamepad1.left_stick_x;
                 turn = gamepad1.right_stick_x;
+
                 // + forward/backward + strafe + turning (negative reverse wheel motion)
                 // # X ... =  set the power (below 1 makes it use less power, thus, go slower by nature)
                 BackR.setPower(0.6 * (vertical - strafe - turn));
@@ -66,6 +67,7 @@ public class Big_Chass extends LinearOpMode {
                 UpArm.setPower(gamepad2.left_stick_y);
                 UpArm2.setPower(gamepad2.left_stick_y);
                 ExpandArm.setPower(gamepad2.right_stick_y);
+
                 // Close claw = Gamepad 2's Left Bumper
                 // Open claw = Gamepad 2's Right Bumper
                 // 0-1 on a line. 0 = Left & 1 = Right (Theoretically, so use a tape marker to test the placement)
