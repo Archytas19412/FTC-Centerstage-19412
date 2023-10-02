@@ -50,6 +50,7 @@ public class Big_Chass extends LinearOpMode {
             FrontL.setDirection(DcMotorSimple.Direction.FORWARD);
             BackL.setDirection(DcMotorSimple.Direction.REVERSE);
             UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
+            ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
 
             while (opModeIsActive()) {
 
@@ -86,7 +87,7 @@ public class Big_Chass extends LinearOpMode {
                     ClawServo.setPosition(0);
                 }
                 if(gamepad2.a){
-                    LaunchSwitch.setPosition(0.08);
+                    LaunchSwitch.setPosition(0.9);
                 }
                 if(gamepad2.b){
                     LaunchRaiser.setPosition(1);
