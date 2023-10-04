@@ -88,7 +88,7 @@ public class Big_Chass extends LinearOpMode {
                     ClawServo.setPosition(0);
                 }
                 if(gamepad2.a){
-                    LaunchSwitch.setPosition(0.9);
+                    LaunchSwitch.setPosition(0.5);
                 }
                 if(gamepad2.b){
                     LaunchRaiser.setPosition(1);
