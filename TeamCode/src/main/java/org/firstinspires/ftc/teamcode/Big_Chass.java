@@ -23,7 +23,6 @@ public class Big_Chass extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-
         //all variables for motion and assign Servo/DcMotor variable to the motor of the same name
         float vertical;
         float strafe;
