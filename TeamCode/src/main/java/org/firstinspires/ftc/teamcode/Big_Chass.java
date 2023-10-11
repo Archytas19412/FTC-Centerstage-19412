@@ -20,7 +20,6 @@ public class Big_Chass extends LinearOpMode {
     DcMotor ExpandArm;
 
      //This function is executed when this Op Mode is selected from the Driver Station.
-    //hello
     @Override
     public void runOpMode() {
 
