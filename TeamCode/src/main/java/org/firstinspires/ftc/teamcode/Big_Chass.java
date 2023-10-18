@@ -91,7 +91,7 @@ public class Big_Chass extends LinearOpMode {
                     LaunchSwitch.setPosition(0.08);
                 }
                 if(gamepad2.b){
-                    LaunchRaiser.setPosition(0.54);
+                    LaunchRaiser.setPosition(0.58);
                 }
                 telemetry.update();
             }
