@@ -51,7 +51,7 @@ public class Blue extends LinearOpMode{
                 sleep(250);
                 BackR.setPower(-0.5);
                 FrontR.setPower(-0.5);
-                BackL.setPower(-0.5);
+                BackL.setPower(0.5);
                 FrontL.setPower(-0.5);
                 sleep(250);
                 BackR.setPower(0);
