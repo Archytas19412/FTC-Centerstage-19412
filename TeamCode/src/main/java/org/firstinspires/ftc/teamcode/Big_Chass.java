@@ -70,8 +70,8 @@ public class Big_Chass extends LinearOpMode {
                 FrontL.setPower(0.6 * (vertical - (strafe + turn)));
                 // Lift/put down the arm = Gamepad 2's Left Stick (Up and down)
                 // Extend/shrink the arm length = Gamepad 2's Right Stick (Up and Down)
-                UpArm.setPower(-0.6 * gamepad2.left_stick_y);
-                UpArm2.setPower(-0.6 * gamepad2.left_stick_y);
+                UpArm.setPower(-0.8 * gamepad2.left_stick_y);
+                UpArm2.setPower(-0.8 * gamepad2.left_stick_y);
                 ExpandArm.setPower(-0.6 * gamepad2.right_stick_y);
 
                 /* Close claw = Gaming Pad 2's Left Bumper
