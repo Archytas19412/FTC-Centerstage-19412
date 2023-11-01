@@ -8,9 +8,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class Big_Chass extends LinearOpMode {
+    //l
     Servo ClawServo;
     Servo LaunchSwitch;
     Servo LaunchRaiser;
+    //l
     DcMotor BackR;
     DcMotor FrontR;
     DcMotor FrontL;
