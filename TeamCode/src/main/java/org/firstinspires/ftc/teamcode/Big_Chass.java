@@ -50,10 +50,10 @@ public class Big_Chass extends OpMode {
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Encoder for the slider
-        ExpandArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        /*ExpandArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ExpandArm.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        ExpandArm.setMode(DcMotor.RunMode.RESET_ENCODERS);*/
     }
 
     public void loop(){
