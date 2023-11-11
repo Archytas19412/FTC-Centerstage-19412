@@ -7,16 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-public class Blue extends LinearOpMode{
-    private DcMotor FrontL;
-    private DcMotor BackL;
-    private DcMotor BackR;
-    private DcMotor FrontR;
-    private Servo ClawServo;
+public class ShortBlue_Auto extends LinearOpMode{
+    DcMotor FrontL;
+    DcMotor BackL;
+    DcMotor BackR;
+    DcMotor FrontR;
+    Servo ClawServo;
 
-    /**
-     * This function is executed when this OpMode is selected from the Driver Station.
-     */
     @Override
     public void runOpMode() {
         FrontL = hardwareMap.get(DcMotor.class, "FrontL");

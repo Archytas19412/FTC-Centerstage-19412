@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp (name = "Big_Chass")
-
 public class Big_Chass extends OpMode {
     //Variables for the arm
     Servo ClawServo;
@@ -48,12 +47,6 @@ public class Big_Chass extends OpMode {
         BackR.setDirection(DcMotorSimple.Direction.REVERSE);
         FrontR.setDirection(DcMotorSimple.Direction.REVERSE);
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        //Encoder for the slider
-        /*ExpandArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
-        ExpandArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ExpandArm.setMode(DcMotor.RunMode.RESET_ENCODERS);*/
     }
 
     public void loop(){
@@ -76,11 +69,6 @@ public class Big_Chass extends OpMode {
         UpArm.setPower(-0.8 * gamepad2.left_stick_y);
         UpArm2.setPower(-0.8 * gamepad2.left_stick_y);
         ExpandArm.setPower(-0.6 * gamepad2.right_stick_y);
-
-        /*if(ExpandArm.getCurrentPosition() >= ){
-
-        }
-         */
 
         /* Close claw = Gaming Pad 2's Left Bumper
            Open claw = Gaming Pad 2's Right Bumper
@@ -107,8 +95,6 @@ public class Big_Chass extends OpMode {
             intakeServo.setPower(0);
         }
 
-        //The captions on the DriverHub
-        telemetry.addData("Slider's Amount of Ticks to Expand: ", ExpandArm.getCurrentPosition());
         telemetry.update();
     }
 }

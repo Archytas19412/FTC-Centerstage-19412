@@ -6,13 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous
-public class Red extends LinearOpMode{
-    private DcMotor FrontL;
-    private DcMotor BackL;
-    private DcMotor BackR;
-    private DcMotor FrontR;
-    private Servo ClawServo;
+@Autonomous(name = "ShortRed_Auto")
+public class ShortRed_Auto extends LinearOpMode{
+    DcMotor FrontL;
+    DcMotor BackL;
+    DcMotor BackR;
+    DcMotor FrontR;
+    Servo ClawServo;
 
     /**
      * This function is executed when this OpMode is selected from the Driver Station.
