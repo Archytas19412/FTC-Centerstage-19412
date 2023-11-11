@@ -70,16 +70,16 @@ public class Big_Chass extends OpMode {
         UpArm2.setPower(-0.8 * gamepad2.left_stick_y);
         ExpandArm.setPower(-0.6 * gamepad2.right_stick_y);
 
-        /* Close claw = Gaming Pad 2's Left Bumper
-           Open claw = Gaming Pad 2's Right Bumper
+        /* Close claw = Gaming Pad 2's Right Bumper
+           Open claw = Gaming Pad 2's Left Bumper
            A = Flick drone launcher switch up
            B = Flick drone launch switch to original position
            X = activate the intake pixel roller to roll forward to grad pixels
            Y = deactivate intake pixel roller*/
-        if (gamepad2.left_bumper) {
+        if (gamepad2.right_bumper) {
             ClawServo.setPosition(0.2);
         }
-        if (gamepad2.right_bumper) {
+        if (gamepad2.left_bumper) {
             ClawServo.setPosition(0);
         }
         if(gamepad2.a){
@@ -88,10 +88,11 @@ public class Big_Chass extends OpMode {
         if(gamepad2.b){
             LaunchRaiser.setPosition(0.55);
         }
-        if (gamepad2.y){
+        if(gamepad2.y){
             intakeServo.setPower(-1);
-        }
-        if(gamepad2.x){
+        } else if (gamepad2.x){
+            intakeServo.setPower(1);
+        } else{
             intakeServo.setPower(0);
         }
 
