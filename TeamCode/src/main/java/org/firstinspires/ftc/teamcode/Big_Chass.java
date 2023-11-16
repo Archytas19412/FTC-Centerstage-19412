@@ -17,7 +17,7 @@ public class Big_Chass extends OpMode {
     DcMotor UpArm;
     DcMotor ExpandArm;
 
-    //Intake box variables
+    //Variable for intake box
     CRServo intakeServo;
 
     //Variables of the wheels
@@ -42,6 +42,8 @@ public class Big_Chass extends OpMode {
         BackL = hardwareMap.dcMotor.get("BackL");
 
         ClawServo.setPosition(0);
+        LaunchSwitch.setPosition(1);
+
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
         BackR.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -83,7 +85,7 @@ public class Big_Chass extends OpMode {
             ClawServo.setPosition(0);
         }
         if(gamepad2.a){
-            LaunchSwitch.setPosition(-0.08);
+            LaunchSwitch.setPosition(0.8);
         }
         if(gamepad2.b){
             LaunchRaiser.setPosition(0.55);
