@@ -41,14 +41,16 @@ public class Big_Chass extends OpMode {
         FrontL = hardwareMap.dcMotor.get("FrontL");
         BackL = hardwareMap.dcMotor.get("BackL");
 
+        LaunchSwitch.setDirection(Servo.Direction.REVERSE);
         ClawServo.setPosition(0);
-        LaunchSwitch.setPosition(1);
+        LaunchSwitch.setPosition(0.9);
 
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
         BackR.setDirection(DcMotorSimple.Direction.REVERSE);
         FrontR.setDirection(DcMotorSimple.Direction.REVERSE);
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
+
     }
 
     public void loop(){
