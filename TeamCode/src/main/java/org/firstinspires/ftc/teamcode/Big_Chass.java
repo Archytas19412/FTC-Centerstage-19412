@@ -52,7 +52,7 @@ public class Big_Chass extends OpMode {
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
-    //ld
+
     public void loop(){
         /* Forward/backwards = Gamepad 1's Left stick (Up and Down)
           Strafe = Gamepad 1's Left stick (Left and Right)
