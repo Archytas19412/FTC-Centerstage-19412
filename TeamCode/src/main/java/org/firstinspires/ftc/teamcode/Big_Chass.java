@@ -109,8 +109,12 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad1.a){
-            Hang_Part1.setPosition(0.5);
-            Hang_Part2.setPosition(0.5);
+            Hang_Part1.setPosition(1);
+            Hang_Part2.setPosition(1);
+        }
+        if(gamepad1.b){
+            Hang_Part1.setPosition(0);
+            Hang_Part2.setPosition(0);
         }
 
         telemetry.update();
