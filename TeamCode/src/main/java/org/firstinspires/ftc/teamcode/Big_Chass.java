@@ -21,8 +21,8 @@ public class Big_Chass extends OpMode {
     CRServo intakeServo;
 
     //Hanging arm variables
-    Servo Hang_Part1;
-    Servo Hang_Part2;
+    Servo Hang_Top;
+    Servo Hang_Bottom;
 
     //Variables of the wheels
     DcMotor BackR;
@@ -39,7 +39,12 @@ public class Big_Chass extends OpMode {
         UpArm2 = hardwareMap.dcMotor.get("UpArm2");
         UpArm = hardwareMap.dcMotor.get("UpArm");
         ExpandArm = hardwareMap.dcMotor.get("ExpandArm");
+
         intakeServo = hardwareMap.crservo.get("intakeServo");
+
+        Hang_Top = hardwareMap.servo.get("Hang_Top");
+        Hang_Bottom = hardwareMap.servo.get("Hang_Bottom");
+
         BackR = hardwareMap.dcMotor.get("BackR");
         FrontR = hardwareMap.dcMotor.get("FrontR");
         FrontL = hardwareMap.dcMotor.get("FrontL");
@@ -109,12 +114,12 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad1.a){
-            Hang_Part1.setPosition(1);
-            Hang_Part2.setPosition(1);
+            Hang_Top.setPosition(1);
+            Hang_Bottom.setPosition(1);
         }
         if(gamepad1.b){
-            Hang_Part1.setPosition(0);
-            Hang_Part2.setPosition(0);
+            Hang_Top.setPosition(0);
+            Hang_Bottom.setPosition(0);
         }
 
         telemetry.update();
