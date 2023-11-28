@@ -20,6 +20,10 @@ public class Big_Chass extends OpMode {
     //Variable for intake box
     CRServo intakeServo;
 
+    //Hanging arm variables
+    Servo Hang_Part1;
+    Servo Hang_Part2;
+
     //Variables of the wheels
     DcMotor BackR;
     DcMotor FrontR;
@@ -83,21 +87,30 @@ public class Big_Chass extends OpMode {
         if (gamepad2.right_bumper) {
             ClawServo.setPosition(0.2);
         }
+
         if (gamepad2.left_bumper) {
             ClawServo.setPosition(0);
         }
+
         if(gamepad2.a){
             LaunchSwitch.setPosition(0.8);
         }
+
         if(gamepad2.b){
             LaunchRaiser.setPosition(0.55);
         }
+
         if(gamepad2.y){
             intakeServo.setPower(-1);
         } else if (gamepad2.x){
             intakeServo.setPower(1);
         } else{
             intakeServo.setPower(0);
+        }
+
+        if(gamepad1.a){
+            Hang_Part1.setPosition(0.5);
+            Hang_Part2.setPosition(0.5);
         }
 
         telemetry.update();
