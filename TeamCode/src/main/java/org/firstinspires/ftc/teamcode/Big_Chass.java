@@ -18,7 +18,7 @@ public class Big_Chass extends OpMode {
     DcMotor ExpandArm;
 
     //Variable for intake box
-    CRServo intakeServo;
+    CRServo IntakeServo;
 
     //Hanging arm variables
     Servo Hang_Top;
@@ -33,14 +33,14 @@ public class Big_Chass extends OpMode {
     //Variables for encoders
     //This function is executed when this Op Mode is selected from the Driver Station.
     public void init() {
-        ClawServo = hardwareMap.servo.get("Claw Servo");
+        ClawServo = hardwareMap.servo.get("ClawServo");
         LaunchSwitch = hardwareMap.servo.get("LaunchSwitch");
         LaunchRaiser = hardwareMap.servo.get("LaunchRaiser");
         UpArm2 = hardwareMap.dcMotor.get("UpArm2");
         UpArm = hardwareMap.dcMotor.get("UpArm");
         ExpandArm = hardwareMap.dcMotor.get("ExpandArm");
 
-        intakeServo = hardwareMap.crservo.get("intakeServo");
+        IntakeServo = hardwareMap.crservo.get("IntakeServo");
 
         Hang_Top = hardwareMap.servo.get("Hang_Top");
         Hang_Bottom = hardwareMap.servo.get("Hang_Bottom");
@@ -106,11 +106,11 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad2.y){
-            intakeServo.setPower(-1);
+            IntakeServo.setPower(-1);
         } else if (gamepad2.x){
-            intakeServo.setPower(1);
+            IntakeServo.setPower(1);
         } else{
-            intakeServo.setPower(0);
+            IntakeServo.setPower(0);
         }
 
         if(gamepad1.a){
