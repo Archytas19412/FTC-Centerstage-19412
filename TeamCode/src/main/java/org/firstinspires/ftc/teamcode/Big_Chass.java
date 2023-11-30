@@ -51,8 +51,12 @@ public class Big_Chass extends OpMode {
         BackL = hardwareMap.dcMotor.get("BackL");
 
         LaunchSwitch.setDirection(Servo.Direction.REVERSE);
+
+        //Initial Positions
         ClawServo.setPosition(0);
         LaunchSwitch.setPosition(0.9);
+        Hang_Top.setPosition(0.05);
+        Hang_Bottom.setPosition(0.45);
 
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -85,7 +89,10 @@ public class Big_Chass extends OpMode {
 
         /* Close claw = Gaming Pad 2's Right Bumper
            Open claw = Gaming Pad 2's Left Bumper
-           A = Flick drone launcher switch up
+
+           Controller 1 Button A = Lift the hanging arm up
+
+           Controller 2 Button A = Flick drone launcher switch up
            B = Flick drone launch switch to original position
            X = activate the intake pixel roller to roll forward to grad pixels
            Y = deactivate intake pixel roller*/
@@ -114,12 +121,11 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad1.a){
-            Hang_Top.setPosition(1);
-            Hang_Bottom.setPosition(1);
+            Hang_Bottom.setPosition(0.8);
         }
+
         if(gamepad1.b){
-            Hang_Top.setPosition(0);
-            Hang_Bottom.setPosition(0);
+            Hang_Top.setPosition(0.8);
         }
 
         telemetry.update();
