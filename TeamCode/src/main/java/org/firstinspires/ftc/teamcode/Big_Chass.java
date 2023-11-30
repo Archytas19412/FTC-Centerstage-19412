@@ -23,6 +23,7 @@ public class Big_Chass extends OpMode {
     //Hanging arm variables
     Servo Hang_Top;
     Servo Hang_Bottom;
+    DcMotor RopeMotor;
 
     //Variables of the wheels
     DcMotor BackR;
@@ -44,6 +45,7 @@ public class Big_Chass extends OpMode {
 
         Hang_Top = hardwareMap.servo.get("Hang_Top");
         Hang_Bottom = hardwareMap.servo.get("Hang_Bottom");
+        RopeMotor = hardwareMap.dcMotor.get("RopeMotor");
 
         BackR = hardwareMap.dcMotor.get("BackR");
         FrontR = hardwareMap.dcMotor.get("FrontR");
@@ -81,6 +83,10 @@ public class Big_Chass extends OpMode {
         BackL.setPower(0.6 * (vertical + (strafe - turn)));
         FrontL.setPower(0.6 * (vertical - (strafe + turn)));
 
+        /*Gamepad1 Right Trigger = Turn the gears attach to the rope to reel the hook back
+         */
+        RopeMotor.setPower(1 * gamepad1.right_trigger);
+
         // Lift put down the arm = Gamepad 2's Left Stick (Up and down)
         // Extend/shrink the arm length = Gamepad 2's Right Stick (Up and Down)
         UpArm.setPower(-0.8 * gamepad2.left_stick_y);
@@ -96,6 +102,14 @@ public class Big_Chass extends OpMode {
            B = Flick drone launch switch to original position
            X = activate the intake pixel roller to roll forward to grad pixels
            Y = deactivate intake pixel roller*/
+        if(gamepad1.a){
+            Hang_Bottom.setPosition(0.8);
+        }
+
+        if(gamepad1.b){
+            Hang_Top.setPosition(0.8);
+        }
+
         if (gamepad2.right_bumper) {
             ClawServo.setPosition(0.2);
         }
@@ -118,14 +132,6 @@ public class Big_Chass extends OpMode {
             IntakeServo.setPower(1);
         } else{
             IntakeServo.setPower(0);
-        }
-
-        if(gamepad1.a){
-            Hang_Bottom.setPosition(0.8);
-        }
-
-        if(gamepad1.b){
-            Hang_Top.setPosition(0.8);
         }
 
         telemetry.update();
