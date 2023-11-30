@@ -58,7 +58,7 @@ public class Big_Chass extends OpMode {
         ClawServo.setPosition(0);
         LaunchSwitch.setPosition(0.9);
         Hang_Top.setPosition(0.05);
-        Hang_Bottom.setPosition(0.45);
+        Hang_Bottom.setPosition(0.55);
 
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -109,7 +109,7 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad1.b){
-            Hang_Top.setPosition(0.8);
+            Hang_Top.setPosition(0.7);
         }
 
         if (gamepad2.right_bumper) {
