@@ -84,8 +84,10 @@ public class Big_Chass extends OpMode {
         FrontL.setPower(0.6 * (vertical - (strafe + turn)));
 
         /*Gamepad1 Right Trigger = Turn the gears attach to the rope to reel the hook back
+         *Gamepad1 Left Trigger = Turn the gears to release the rope
          */
         RopeMotor.setPower(1 * gamepad1.right_trigger);
+        RopeMotor.setPower(-1 * gamepad1.left_trigger);
 
         // Lift put down the arm = Gamepad 2's Left Stick (Up and down)
         // Extend/shrink the arm length = Gamepad 2's Right Stick (Up and Down)
