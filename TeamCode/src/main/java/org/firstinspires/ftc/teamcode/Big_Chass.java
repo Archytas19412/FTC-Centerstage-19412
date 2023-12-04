@@ -104,7 +104,7 @@ public class Big_Chass extends OpMode {
            Controller 2 Button A = Flick drone launcher switch up
            B = Flick drone launch switch to original position
            X = activate the intake pixel roller to roll forward to grad pixels
-           Y = deactivate intake pixel roller*/
+           Y = deactivate intake pixel roller */
 
         if(gamepad1.x){
             Hang_Bottom.setPosition(0.55);
