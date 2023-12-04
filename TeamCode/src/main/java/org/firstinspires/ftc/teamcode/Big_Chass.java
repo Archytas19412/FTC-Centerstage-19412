@@ -99,7 +99,9 @@ public class Big_Chass extends OpMode {
         /* Close claw = Gaming Pad 2's Right Bumper
            Open claw = Gaming Pad 2's Left Bumper
 
-           Controller 1 Button A = Lift the hanging arm up
+           Controller 1 Button A = Lift the bottom part of the hanging arm up
+           B = Lift the top part of the hanging arm up
+           X = set the hanging arm back to original position
 
            Controller 2 Button A = Flick drone launcher switch up
            B = Flick drone launch switch to original position
