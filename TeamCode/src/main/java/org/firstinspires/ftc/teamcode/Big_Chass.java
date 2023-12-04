@@ -59,6 +59,7 @@ public class Big_Chass extends OpMode {
         LaunchSwitch.setPosition(0.9);
         Hang_Top.setPosition(0.05);
         Hang_Bottom.setPosition(0.55);
+        LaunchRaiser.setPosition(0);
 
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -104,12 +105,18 @@ public class Big_Chass extends OpMode {
            B = Flick drone launch switch to original position
            X = activate the intake pixel roller to roll forward to grad pixels
            Y = deactivate intake pixel roller*/
+
+        if(gamepad1.x){
+            Hang_Bottom.setPosition(0.55);
+            Hang_Top.setPosition(0.05);
+        }
+
         if(gamepad1.a){
             Hang_Bottom.setPosition(0.8);
         }
 
         if(gamepad1.b){
-            Hang_Top.setPosition(0.7);
+            Hang_Top.setPosition(0.6);
         }
 
         if (gamepad2.right_bumper) {
@@ -125,7 +132,7 @@ public class Big_Chass extends OpMode {
         }
 
         if(gamepad2.b){
-            LaunchRaiser.setPosition(0.55);
+            LaunchRaiser.setPosition(0.04);
         }
 
         if(gamepad2.y){
