@@ -24,13 +24,14 @@ public class ShortBlue_Auto extends LinearOpMode{
 
         FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
-        // Put initialization blocks here.
+
+        //Once the driver hub is initialized
         waitForStart();
+        //Once the driver hub is activated
         if (opModeIsActive()) {
-            // Put run blocks here.
+            //Run the code in a sequence until asked to stop
             while (!isStopRequested()) {
-                // Put loop blocks here.
-                BackR.setPower(-0.5);
+                /*BackR.setPower(-0.5);
                 FrontR.setPower(0.5);
                 BackL.setPower(-0.5);
                 FrontL.setPower(-0.5);
@@ -55,7 +56,16 @@ public class ShortBlue_Auto extends LinearOpMode{
                 FrontR.setPower(0);
                 BackL.setPower(0);
                 FrontL.setPower(0);
-                sleep(30000);
+                sleep(30000); */
+
+                ClawServo.setPosition();
+                BackR.setPower(1);
+                FrontR.setPower(1);
+                BackL.setPower(1);
+                FrontL.setPower(1);
+                sleep(3000);
+
+
                 telemetry.update();
             }
         }

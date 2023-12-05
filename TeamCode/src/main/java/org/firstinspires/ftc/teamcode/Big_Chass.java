@@ -96,50 +96,48 @@ public class Big_Chass extends OpMode {
         UpArm2.setPower(-0.8 * gamepad2.left_stick_y);
         ExpandArm.setPower(-0.6 * gamepad2.right_stick_y);
 
-        /* Close claw = Gaming Pad 2's Right Bumper
-           Open claw = Gaming Pad 2's Left Bumper
-
-           Controller 1 Button A = Lift the bottom part of the hanging arm up
-           B = Lift the top part of the hanging arm up
-           X = set the hanging arm back to original position
-
-           Controller 2 Button A = Flick drone launcher switch up
-           B = Flick drone launch switch to original position
-           X = activate the intake pixel roller to roll forward to grad pixels
-           Y = deactivate intake pixel roller */
-
+        //Controller 1 Button X = set the hanging arm back to original position
         if(gamepad1.x){
             Hang_Bottom.setPosition(0.55);
             Hang_Top.setPosition(0.05);
         }
 
+        //Controller 1 Button A = Lift the bottom part of the hanging arm up
         if(gamepad1.a){
             Hang_Bottom.setPosition(0.8);
         }
 
+        //Controller 1 Button B = Lift the top part of the hanging arm up
         if(gamepad1.b){
             Hang_Top.setPosition(0.6);
         }
 
+        //Close claw = Gaming Pad 2's Right Bumper
         if (gamepad2.right_bumper) {
             ClawServo.setPosition(0.2);
         }
 
+        //Open claw = Gaming Pad 2's Left Bumper
         if (gamepad2.left_bumper) {
             ClawServo.setPosition(0);
         }
 
+        //Controller 2 Button A = Flick drone launcher switch up
         if(gamepad2.a){
             LaunchSwitch.setPosition(0.8);
         }
 
+        //Controller 2 Button B = Flick drone launcher up
         if(gamepad2.b){
             LaunchRaiser.setPosition(0.04);
         }
 
+        //Controller 2 Button Y = reverse intake pixel roller's rotation
         if(gamepad2.y){
             IntakeServo.setPower(-1);
-        } else if (gamepad2.x){
+        }
+        //Controller 1 Button X = activate the intake pixel roller to roll forward to get pixels
+        else if (gamepad2.x){
             IntakeServo.setPower(1);
         } else{
             IntakeServo.setPower(0);
