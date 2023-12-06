@@ -31,7 +31,35 @@ public class ShortBlue_Auto extends LinearOpMode{
         if (opModeIsActive()) {
             //Run the code in a sequence until asked to stop
             while (!isStopRequested()) {
-                /*BackR.setPower(-0.5);
+
+                //Go forward
+                //ClawServo.setPosition(0.2);
+                BackR.setPower(1);
+                FrontR.setPower(1);
+                BackL.setPower(1);
+                FrontL.setPower(1);
+                sleep(250);
+                //Go backward
+                //ClawServo.setPosition(0);
+                BackR.setPower(-1);
+                FrontR.setPower(-1);
+                BackL.setPower(-1);
+                FrontL.setPower(-1);
+                sleep(100);
+                //Strafe left
+                BackR.setPower(-0.5);
+                FrontR.setPower(-0.5);
+                BackL.setPower(0.5);
+                FrontL.setPower(-0.5);
+                sleep(250);
+
+                telemetry.update();
+            }
+        }
+    }
+}
+
+/*BackR.setPower(-0.5);
                 FrontR.setPower(0.5);
                 BackL.setPower(-0.5);
                 FrontL.setPower(-0.5);
@@ -57,18 +85,3 @@ public class ShortBlue_Auto extends LinearOpMode{
                 BackL.setPower(0);
                 FrontL.setPower(0);
                 sleep(30000); */
-
-                ClawServo.setPosition();
-                BackR.setPower(1);
-                FrontR.setPower(1);
-                BackL.setPower(1);
-                FrontL.setPower(1);
-                sleep(3000);
-
-
-                telemetry.update();
-            }
-        }
-    }
-}
-

@@ -31,7 +31,6 @@ public class Big_Chass extends OpMode {
     DcMotor FrontL;
     DcMotor BackL;
 
-    //Variables for encoders
     //This function is executed when this Op Mode is selected from the Driver Station.
     public void init() {
         ClawServo = hardwareMap.servo.get("ClawServo");
@@ -112,12 +111,12 @@ public class Big_Chass extends OpMode {
             Hang_Top.setPosition(0.6);
         }
 
-        //Close claw = Gaming Pad 2's Right Bumper
+        //Gaming Pad 2's Right Bumper = Close Claw
         if (gamepad2.right_bumper) {
             ClawServo.setPosition(0.2);
         }
 
-        //Open claw = Gaming Pad 2's Left Bumper
+        //Gaming Pad 2's Left Bumper = Open Claw
         if (gamepad2.left_bumper) {
             ClawServo.setPosition(0);
         }
