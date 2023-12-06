@@ -27,21 +27,26 @@ public class FarBlue_Auto extends LinearOpMode{
         waitForStart();
         if (opModeIsActive()) {
             while (!isStopRequested()) {
+                //Claw close and go backward
+                ClawServo.setPosition(0.2);
+                FrontL.setPower(-1);
+                BackL.setPower(-1);
+                FrontR.setPower(-1);
+                BackR.setPower(-1);
+                sleep(250);
+                //Claw open and continues to go backward
+                ClawServo.setPosition(0);
+                FrontL.setPower(-1);
+                BackL.setPower(-1);
+                FrontR.setPower(-1);
+                BackR.setPower(-1);
+                sleep(250);
+                //Strafe right
                 FrontL.setPower(0.5);
                 BackL.setPower(-0.5);
                 FrontR.setPower(-0.5);
                 BackR.setPower(0.5);
-                sleep(2000);
-                FrontL.setPower(0.5);
-                BackL.setPower(0.5);
-                FrontR.setPower(0.5);
-                BackR.setPower(0.5);
-                sleep(2000);
-                FrontL.setPower(-0.5);
-                BackL.setPower(0.5);
-                FrontR.setPower(0.5);
-                BackR.setPower(-0.5);
-                sleep(2000);
+                sleep(250);
 
                 telemetry.update();
             }

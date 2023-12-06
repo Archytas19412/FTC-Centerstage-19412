@@ -33,14 +33,14 @@ public class ShortBlue_Auto extends LinearOpMode{
             while (!isStopRequested()) {
 
                 //Go forward
-                //ClawServo.setPosition(0.2);
+                ClawServo.setPosition(0.2);
                 BackR.setPower(1);
                 FrontR.setPower(1);
                 BackL.setPower(1);
                 FrontL.setPower(1);
                 sleep(250);
                 //Go backward
-                //ClawServo.setPosition(0);
+                ClawServo.setPosition(0);
                 BackR.setPower(-1);
                 FrontR.setPower(-1);
                 BackL.setPower(-1);
@@ -48,7 +48,7 @@ public class ShortBlue_Auto extends LinearOpMode{
                 sleep(100);
                 //Strafe left
                 BackR.setPower(-0.5);
-                FrontR.setPower(-0.5);
+                FrontR.setPower(0.5);
                 BackL.setPower(0.5);
                 FrontL.setPower(-0.5);
                 sleep(250);

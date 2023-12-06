@@ -30,17 +30,19 @@ public class FarRed_Auto extends LinearOpMode{
         if (opModeIsActive()) {
             //Start the Sequence until the end or stopped
             while (!isStopRequested()) {
-                //Goes Left
+                //Close claw and go backward
                 FrontL.setPower(-0.5);
                 BackL.setPower(0.5);
                 FrontR.setPower(0.5);
                 BackR.setPower(-0.5);
                 sleep(2000);
-                FrontL.setPower(0.5);
-                BackL.setPower(0.5);
-                FrontR.setPower(0.5);
-                BackR.setPower(0.5);
+                //Open claw and continues to go backward
+                FrontL.setPower(-1);
+                BackL.setPower(-1);
+                FrontR.setPower(-1);
+                BackR.setPower(-1);
                 sleep(2000);
+                //Strafe left
                 FrontL.setPower(0.5);
                 BackL.setPower(-0.5);
                 FrontR.setPower(-0.5);

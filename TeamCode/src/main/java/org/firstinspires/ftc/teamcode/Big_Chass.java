@@ -64,7 +64,6 @@ public class Big_Chass extends OpMode {
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
         BackR.setDirection(DcMotorSimple.Direction.REVERSE);
         FrontR.setDirection(DcMotorSimple.Direction.REVERSE);
-        BackL.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 

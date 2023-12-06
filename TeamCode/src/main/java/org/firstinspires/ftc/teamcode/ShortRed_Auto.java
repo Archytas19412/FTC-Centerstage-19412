@@ -14,9 +14,6 @@ public class ShortRed_Auto extends LinearOpMode{
     DcMotor FrontR;
     Servo ClawServo;
 
-    /**
-     * This function is executed when this OpMode is selected from the Driver Station.
-     */
     @Override
     public void runOpMode() {
         FrontL = hardwareMap.get(DcMotor.class, "FrontL");
@@ -27,13 +24,38 @@ public class ShortRed_Auto extends LinearOpMode{
 
         FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
-        // Put initialization blocks here.
+
         waitForStart();
         if (opModeIsActive()) {
-            // Put run blocks here.
             while (!isStopRequested()) {
-                // Put loop blocks here.
+                //Go Forward
+                ClawServo.setPosition(0.2);
+                BackR.setPower(1);
+                FrontR.setPower(1);
+                BackL.setPower(1);
+                FrontL.setPower(1);
+                sleep(250);
+                //Go Backward
+                ClawServo.setPosition(0);
+                BackR.setPower(-1);
+                FrontR.setPower(-1);
+                BackL.setPower(-1);
+                FrontL.setPower(-1);
+                sleep(200);
+                //Strafe Right
                 BackR.setPower(0.5);
+                FrontR.setPower(-0.5);
+                BackL.setPower(-0.5);
+                FrontL.setPower(0.5);
+                sleep(250);
+
+                telemetry.update();
+            }
+        }
+    }
+}
+
+/* BackR.setPower(0.5);
                 FrontR.setPower(-0.5);
                 BackL.setPower(0.5);
                 FrontL.setPower(0.5);
@@ -58,9 +80,4 @@ public class ShortRed_Auto extends LinearOpMode{
                 FrontR.setPower(0);
                 BackL.setPower(0);
                 FrontL.setPower(0);
-                sleep(30000);
-                telemetry.update();
-            }
-        }
-    }
-}
+                sleep(30000);*/
