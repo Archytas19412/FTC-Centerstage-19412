@@ -13,7 +13,7 @@ public class ShortBlue_Auto extends LinearOpMode{
     DcMotor BackR;
     DcMotor FrontR;
     Servo ClawServo;
-//Hello
+
     private void Drive(int FrontLTarget,int FrontRTarget,int BackLTarget,int BackRTarget,double Speed){
         FrontL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
