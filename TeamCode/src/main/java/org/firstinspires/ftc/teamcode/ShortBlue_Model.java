@@ -3,17 +3,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "ShortRed_Auto")
-public class ShortRed_Auto extends LinearOpMode{
+@Autonomous (name = "ShortBlue_Model")
+public class ShortBlue_Model extends LinearOpMode{
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
     DcMotor FrontR;
     Servo ClawServo;
 
-    private void Drive(int FrontLTarget,int FrontRTarget,int BackLTarget,int BackRTarget,double Speed){
+
+
+    public void Drive(int FrontLTarget,int FrontRTarget,int BackLTarget,int BackRTarget,double Speed){
         FrontL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -43,12 +46,16 @@ public class ShortRed_Auto extends LinearOpMode{
         FrontR = hardwareMap.get(DcMotor.class, "FrontR");
         ClawServo = hardwareMap.get(Servo.class, "Claw Servo");
 
-        FrontL.setDirection(DcMotor.Direction.REVERSE);
-        BackL.setDirection(DcMotor.Direction.REVERSE);
+        FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackL.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        //Once the driver hub is initialized
         waitForStart();
+        //Once the driver hub is activated
         if (opModeIsActive()) {
+            //Run the code in a sequence until asked to stop
             while (!isStopRequested()) {
+
                 //Claw grab pixel
                 ClawServo.setPosition(0.2);
                 sleep(500);
@@ -61,8 +68,8 @@ public class ShortRed_Auto extends LinearOpMode{
                 //Go backward
                 Drive(-1100,-1100, -1100,-1100,0.5);
                 sleep(30000);
-                //Strafe right
-                Drive(2000,-2000,-2000,2000,0.5);
+                //Strafe left
+                Drive(-2000,2000,2000,-2000,0.5);
                 sleep(30000);
                 telemetry.update();
             }
