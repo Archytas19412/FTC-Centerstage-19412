@@ -32,7 +32,7 @@ public class Big_Chass extends OpMode {
     DcMotor FrontL;
     DcMotor BackL;
 
-    //This function is executed when this Op Mode is selected from the Driver Station.
+    //This function is executed when this Op Mode is selected from the Driver Station (triangle button pressed)
     public void init() {
         ClawServo = hardwareMap.servo.get("ClawServo");
         LaunchSwitch = hardwareMap.servo.get("LaunchSwitch");

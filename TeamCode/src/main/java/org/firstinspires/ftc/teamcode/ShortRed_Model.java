@@ -11,24 +11,32 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-//Hello
+
 @Autonomous
 public class ShortRed_Model extends LinearOpMode {
+
+    //Motors and servo variables
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
     DcMotor FrontR;
     Servo ClawServo;
 
+    //Location of the robot (default)
     private double position = -100000;
+    //Separate the webcam's view into left, middle, and right sections
     private final double rightSignal = 270;
     private final double leftSignal = -270;
+    //Tensor flow object detection variable
     private TfodProcessor tfod;
+    //Variable to create visionportal
     private VisionPortal visionPortal;
+    //Variable to measure the webcam's confidence in identifying the object
     private double confidence = 0;
+    //Variable to indicate how many object it recognizes
     private int numRecognize = 0;
 
-    //Model we are looking for
+    //Model's label we are looking for
     private static final String[] MODEL = {"RedOwl"};
 
     @Override
@@ -176,6 +184,7 @@ public class ShortRed_Model extends LinearOpMode {
 
         visionPortal = builder.build();
     }
+    //Scan for any object the webcam recognizes
     private boolean scanForObjects() {
         List<Recognition> recognitions = tfod.getRecognitions();
         numRecognize = recognitions.size();
@@ -188,6 +197,7 @@ public class ShortRed_Model extends LinearOpMode {
 
         //Go through a list of models and display label, confidence, position, and size for each
         for(Recognition model : recognitions){
+            //Robot set the location and confidence here
             position = (model.getLeft() + model.getRight()) / 2;
             confidence = model.getConfidence();
 
