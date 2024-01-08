@@ -19,6 +19,7 @@ public class Big_Chass extends OpMode {
 
     //Variable for intake box
     CRServo IntakeServo;
+    CRServo Intake_Lift;
 
     //Hanging arm variables
     Servo Hang_Top;
@@ -41,6 +42,7 @@ public class Big_Chass extends OpMode {
         ExpandArm = hardwareMap.dcMotor.get("ExpandArm");
 
         IntakeServo = hardwareMap.crservo.get("IntakeServo");
+        Intake_Lift = hardwareMap.crservo.get("intake_Lift");
 
         Hang_Top = hardwareMap.servo.get("Hang_Top");
         Hang_Bottom = hardwareMap.servo.get("Hang_Bottom");
@@ -139,6 +141,18 @@ public class Big_Chass extends OpMode {
             IntakeServo.setPower(1);
         } else{
             IntakeServo.setPower(0);
+        }
+
+        //Controller 1 Dpad Up Button = Release rope to lower the intake roller
+        if(gamepad1.dpad_up){
+            Intake_Lift.setPower(1);
+        }
+        //Controller 1 Dpad Down Button = Reel rope to lift the intake roller
+        else if(gamepad1.dpad_down){
+            Intake_Lift.setPower(-1);
+        }
+        else{
+            Intake_Lift.setPower(0);
         }
 
         telemetry.update();
