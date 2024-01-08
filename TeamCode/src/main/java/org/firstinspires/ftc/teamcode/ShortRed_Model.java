@@ -37,6 +37,12 @@ public class ShortRed_Model extends LinearOpMode {
         FrontL.setDirection(DcMotor.Direction.REVERSE);
         BackL.setDirection(DcMotor.Direction.REVERSE);
 
+        //Reduce slip in motors
+        FrontL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //Claw close on pixel
         ClawServo.setPosition(0.2);
 
@@ -50,10 +56,18 @@ public class ShortRed_Model extends LinearOpMode {
 
         waitForStart();
 
-        //Robot go to the middle spike if an object is detected
+        //Robot go to the middle spike
         if (position == -100000 || confidence < 0.9) {
+
+        }
+        //Robot go to the right spike
+        else if(position < turnSignal){
+
+        }
+        //Robot go to the left spike
+        else if(position > turnSignal){
             sleep(500);
-            //GO forward
+            //Go forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
             //Claw release pixel
@@ -67,7 +81,7 @@ public class ShortRed_Model extends LinearOpMode {
             sleep(30000);
         }
     }
-}
+
     /**
      * @param FrontLTarget: the position desired for the front left wheel to turn towards
      * @param FrontRTarget: the position desired for the front right wheel to turn towards
@@ -97,6 +111,22 @@ public class ShortRed_Model extends LinearOpMode {
         BackR.setPower(Speed);
     }
     private void initTfod() {
+
+        //Create the tensorflow object processor
+        tfod = new TfodProcessor.Builder()
+
+                .setModelFileName("Archytas_Red Model.tflite")
+
+                .setMaxNumRecognitions(1)
+                .setTrackerMaxOverlap(0.25f)
+                .setModelLabels(MODEL)
+                .setNumDetectorThreads(1)
+                .setNumExecutorThreads(1)
+
+                .build();
+
+        //Create the vision portal
+
     }
     private void scanForObjects() {
     }
