@@ -5,8 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+import java.util.List;
 
 @Autonomous
 public class ShortRed_Model extends LinearOpMode {
@@ -17,14 +21,15 @@ public class ShortRed_Model extends LinearOpMode {
     Servo ClawServo;
 
     private double position = -100000;
-    private final double turnSignal = 270;
+    private final double rightSignal = 270;
+    private final double leftSignal = -270;
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     private double confidence = 0;
     private int numRecognize = 0;
 
     //Model we are looking for
-    private static final String[] MODEL = {"Archytas_Red Model"};
+    private static final String[] MODEL = {"RedOwl"};
 
     @Override
     public void runOpMode() {
@@ -57,15 +62,15 @@ public class ShortRed_Model extends LinearOpMode {
         waitForStart();
 
         //Robot go to the middle spike
-        if (position == -100000 || confidence < 0.9) {
+        if (position > leftSignal && position < rightSignal){
 
         }
         //Robot go to the right spike
-        else if(position < turnSignal){
+        else if(position > rightSignal){
 
         }
         //Robot go to the left spike
-        else if(position > turnSignal){
+        else if(position < leftSignal){
             sleep(500);
             //Go forward
             Drive(1250, 1250, 1250, 1250, 0.5);
@@ -126,8 +131,35 @@ public class ShortRed_Model extends LinearOpMode {
                 .build();
 
         //Create the vision portal
+        VisionPortal.Builder builder = new VisionPortal.Builder();
 
+        builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+
+        builder.addProcessor(tfod);
+
+        visionPortal = builder.build();
     }
-    private void scanForObjects() {
+    private boolean scanForObjects() {
+        List<Recognition> recognitions = tfod.getRecognitions();
+        numRecognize = recognitions.size();
+
+        telemetry.addData("# of Objects Detected", numRecognize);
+
+        if(recognitions.isEmpty()){
+            return false;
+        }
+
+        //Go through a list of models and display label, confidence, position, and size for each
+        for(Recognition model : recognitions){
+            position = (model.getLeft() + model.getRight()) / 2;
+            confidence = model.getConfidence();
+
+            telemetry.addData("", " ");
+            telemetry.addData("Object", "%s (%.Of %% COnf.)", model.getLabel(), model.getConfidence() * 100);
+            telemetry.addData("- Position", "%.Of", position);
+            telemetry.addData("- Size", "%.Of x %.Of", model.getWidth(), model.getHeight());
+            break;
+        }
+        return true;
     }
 }
