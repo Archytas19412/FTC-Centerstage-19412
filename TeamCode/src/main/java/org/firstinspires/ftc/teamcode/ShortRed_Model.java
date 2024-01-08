@@ -63,26 +63,63 @@ public class ShortRed_Model extends LinearOpMode {
 
         //Robot go to the middle spike
         if (position > leftSignal && position < rightSignal){
-
+            //Go Forward
+            Drive(1250, 1250, 1250, 1250, 0.5);
+            sleep(2000);
+            //Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            //Go Backward
+            Drive(-1100, -1100, -1100, -1100, 0.5);
+            sleep(3000);
+            //Strafe Right
+            Drive(2000, -2000, -2000, 2000, 0.5);
+            sleep(30000);
         }
         //Robot go to the right spike
         else if(position > rightSignal){
-
+            //Go Forward
+            Drive(1000, 1000, 1000, 1000, 0.5);
+            sleep(2000);
+            //Strafe Right
+            Drive(525, -525, -525, 525, 0.5);
+            sleep(2000);
+            //Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            //Go Backwards
+            Drive(-850, -850, -850, -850, 0.5);
+            sleep(3000);
+            //Strafe Right
+            Drive(1475, -1475, -1475, 1475, 0.5);
+            sleep(30000);
+            telemetry.update();
         }
         //Robot go to the left spike
         else if(position < leftSignal){
-            sleep(500);
-            //Go forward
+            // Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
-            //Claw release pixel
+            // Turn Left
+            Drive(-1000, 1000, -1000, 1000, 0.5);
+            sleep(3000);
+            // Move Forward
+            Drive(100, 100, 100, 100, 0.5);
+            sleep(1000);
+            // Claw Opens
             ClawServo.setPosition(0);
             sleep(500);
-            //Go backward
+            // Go Backward
+            Drive(-300, -300, -300, -300, 0.5);
+            sleep(1000);
+            //Straighten Robot
+            Drive(1000, -1000, 1000, -1000, 0.5);
+            sleep(3000);
+            //Go Backwards
             Drive(-1100, -1100, -1100, -1100, 0.5);
-            sleep(30000);
-            //Strafe right
-            Drive(2000, -2000, -2000, 2000, 0.5);
+            sleep(3000);
+            //Strafe Right
+            Drive(1800, -1800, -1800, 1800, 0.5);
             sleep(30000);
         }
     }
