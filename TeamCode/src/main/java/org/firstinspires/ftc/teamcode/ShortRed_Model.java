@@ -165,7 +165,7 @@ public class ShortRed_Model extends LinearOpMode {
         //Create the tensorflow object processor
         tfod = new TfodProcessor.Builder()
 
-                .setModelFileName("Archytas_Red Model.tflite")
+                .setModelFileName("Archytas_RedModel.tflite")
 
                 .setMaxNumRecognitions(1)
                 .setTrackerMaxOverlap(0.25f)
