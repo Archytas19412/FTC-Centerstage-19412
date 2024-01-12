@@ -167,11 +167,11 @@ public class ShortRed_Model extends LinearOpMode {
 
                 .setModelFileName("Archytas_RedModel.tflite")
 
-                .setMaxNumRecognitions(1)
+                .setMaxNumRecognitions(3)
                 .setTrackerMaxOverlap(0.25f)
                 .setModelLabels(MODEL)
-                .setNumDetectorThreads(1)
-                .setNumExecutorThreads(1)
+                .setNumDetectorThreads(4)
+                .setNumExecutorThreads(4)
 
                 .build();
 

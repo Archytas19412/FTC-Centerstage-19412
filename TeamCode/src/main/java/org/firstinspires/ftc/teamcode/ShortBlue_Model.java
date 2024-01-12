@@ -44,7 +44,7 @@ public class ShortBlue_Model extends LinearOpMode{
         BackL = hardwareMap.get(DcMotor.class, "BackL");
         BackR = hardwareMap.get(DcMotor.class, "BackR");
         FrontR = hardwareMap.get(DcMotor.class, "FrontR");
-        ClawServo = hardwareMap.get(Servo.class, "Claw Servo");
+        ClawServo = hardwareMap.get(Servo.class, "ClawServo");
 
         FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
         BackL.setDirection(DcMotorSimple.Direction.REVERSE);
