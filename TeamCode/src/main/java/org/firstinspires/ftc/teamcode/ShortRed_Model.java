@@ -164,7 +164,7 @@ public class ShortRed_Model extends LinearOpMode {
 
         //Create the tensorflow object processor
         tfod = new TfodProcessor.Builder()
-//hi
+
                 .setModelFileName("Archytas_RedModel.tflite")
 
                 .setMaxNumRecognitions(1)
