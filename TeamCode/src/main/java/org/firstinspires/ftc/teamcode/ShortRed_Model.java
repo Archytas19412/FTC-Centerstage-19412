@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -37,6 +36,9 @@ public class ShortRed_Model extends LinearOpMode {
     //Variable to indicate how many object it recognizes
     private int numRecognize = 0;
 
+    //Create a list with the lable of our model
+    private static final String[] MODEL = {"RedOwl"};
+
     @Override
     public void runOpMode() {
         FrontL = hardwareMap.get(DcMotor.class, "FrontL");
@@ -60,8 +62,8 @@ public class ShortRed_Model extends LinearOpMode {
         //This function set up the tfod processor and VisionPortal
         initTfod();
 
-        //Scan objects while the robot is active
-        while (opModeIsActive()) {
+        //Scan objects while the robot is not active
+        while (!opModeIsActive()) {
             scanForObjects();
         }
 
@@ -161,10 +163,32 @@ public class ShortRed_Model extends LinearOpMode {
     private void initTfod() {
 
         //Create the tensorflow object processor
-        tfod = TfodProcessor.easyCreateWithDefaults();
+        tfod = new TfodProcessor.Builder()
+
+                // Use setModelAssetName() if the TF Model is built in as an asset.
+                // Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                //.setModelAssetName(TFOD_MODEL_ASSET)
+                .setModelFileName("RedModel.tflite")
+
+                .setMaxNumRecognitions(4)
+                .setTrackerMaxOverlap(0.25f)
+                .setModelLabels(MODEL)
+                .setNumDetectorThreads(4)
+                .setNumExecutorThreads(4)
+//
+                .build();
 
         //Create the vision portal
-        visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), tfod);
+        VisionPortal.Builder builder = new VisionPortal.Builder();
+
+        // Set the camera (webcam).
+        builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+
+        //Set and Enable processor
+        builder.addProcessor(tfod);
+
+        //Build VisionPortal
+        visionPortal = builder.build();
     }
     //Scan for any object the webcam recognizes
     private boolean scanForObjects() {
