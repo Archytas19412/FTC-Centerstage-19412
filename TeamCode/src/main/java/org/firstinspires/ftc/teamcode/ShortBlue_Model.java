@@ -3,20 +3,143 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous (name = "ShortBlue_Model")
-public class ShortBlue_Model extends LinearOpMode{
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+
+import java.util.List;
+
+@Autonomous(name = "ShortBlue_Model")
+public class ShortBlue_Model extends LinearOpMode {
+
+    //Motors and servo variables
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
     DcMotor FrontR;
     Servo ClawServo;
 
+    //Location of the robot (default)
+    private double position = -100000;
+    //Separate the webcam's view into left, middle, and right sections
+    private final double rightSignal = 270;
 
+    //Tensor flow object detection variable
+    private TfodProcessor tfod;
+    //Variable to create visionportal
+    private VisionPortal visionPortal;
+    //Variable to measure the webcam's confidence in identifying the object
+    private double confidence = 0;
+    //Variable to indicate how many object it recognizes
+    private int numRecognize = 0;
 
-    public void Drive(int FrontLTarget,int FrontRTarget,int BackLTarget,int BackRTarget,double Speed){
+    //Create a list with the label of our model
+    private static final String[] MODEL = {"BlueOwl"};
+
+    @Override
+    public void runOpMode() {
+        FrontL = hardwareMap.get(DcMotor.class, "FrontL");
+        BackL = hardwareMap.get(DcMotor.class, "BackL");
+        BackR = hardwareMap.get(DcMotor.class, "BackR");
+        FrontR = hardwareMap.get(DcMotor.class, "FrontR");
+        ClawServo = hardwareMap.get(Servo.class, "ClawServo");
+
+        FrontL.setDirection(DcMotor.Direction.REVERSE);
+        BackL.setDirection(DcMotor.Direction.REVERSE);
+
+        //Reduce slip in motors
+        FrontL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //Claw close on pixel
+        ClawServo.setPosition(0.2);
+
+        //This function set up the tfod processor and VisionPortal
+        initTfod();
+
+        //Scan objects while the robot is not active
+        while (!opModeIsActive()) {
+            scanForObjects();
+        }
+
+        waitForStart();
+
+        //Robot go to the middle spike
+        if (position < rightSignal){
+            //Go Forward
+            Drive(1250, 1250, 1250, 1250, 0.5);
+            sleep(2000);
+            //Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            //Go Backward
+            Drive(-1100, -1100, -1100, -1100, 0.5);
+            sleep(3000);
+            //Strafe Left
+            Drive(-2000, 2000, 2000, -2000, 0.5);
+            sleep(30000);
+        }
+        //Robot go to the right spike
+        else if(position > rightSignal){
+            //Go Forward
+            Drive(1250, 1250, 1250, 1250, 0.5);
+            sleep(2000);
+            //Turn Right
+            Drive(1000, -1000, 1000, -1000, 0.5);
+            sleep(3000);
+            //Go Forward
+            Drive(100, 100, 100, 100, 0.5);
+            sleep(1000);
+            //Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            //Go Backwards
+            Drive(-300, -300, -300, -300, 0.5);
+            sleep(3000);
+            //Straighten Robot
+            Drive(-1000, 1000, -1000, 1000, 0.5);
+            sleep(3000);
+            //Go Backwards
+            Drive(-1100, -1100, -1100, -1100, 0.5);
+            sleep(3000);
+            //Strafe Left
+            Drive(-1800, 1800, 1800, -1800, 0.5);
+            sleep(30000);
+            telemetry.update();
+        }
+        //Robot go to the left spike
+        else if(confidence < 0.80){
+            // Go Forward
+            Drive(1000, 1000, 1000, 1000, 0.5);
+            sleep(2000);
+            // Strafe Left
+            Drive(-525, 525, 525, -525, 0.5);
+            sleep(2000);
+            // Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Go Backward
+            Drive(-850, -850, -850, -850, 0.5);
+            sleep(3000);
+            //Strafe Left
+            Drive(-1475 ,1475, 1475, -1475, 0.5);
+            sleep(30000);
+        }
+    }
+
+    /**
+     * @param FrontLTarget: the position desired for the front left wheel to turn towards
+     * @param FrontRTarget: the position desired for the front right wheel to turn towards
+     * @param BackLTarget: the position desired for the back left wheel to turn towards
+     * @param BackRTarget: the position desired for the back right wheel to turn towards
+     * @param Speed: the speed and power the wheel will be going at
+     */
+    public void Drive(int FrontLTarget, int FrontRTarget, int BackLTarget, int BackRTarget, double Speed) {
         FrontL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -37,42 +160,59 @@ public class ShortBlue_Model extends LinearOpMode{
         BackL.setPower(Speed);
         BackR.setPower(Speed);
     }
+    private void initTfod() {
 
-    @Override
-    public void runOpMode() {
-        FrontL = hardwareMap.get(DcMotor.class, "FrontL");
-        BackL = hardwareMap.get(DcMotor.class, "BackL");
-        BackR = hardwareMap.get(DcMotor.class, "BackR");
-        FrontR = hardwareMap.get(DcMotor.class, "FrontR");
-        ClawServo = hardwareMap.get(Servo.class, "ClawServo");
+        //Create the tensorflow object processor
+        tfod = new TfodProcessor.Builder()
 
-        FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
-        BackL.setDirection(DcMotorSimple.Direction.REVERSE);
+                // Use setModelAssetName() if the TF Model is built in as an asset.
+                // Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
+                //.setModelAssetName(TFOD_MODEL_ASSET)
+                .setModelFileName("BlueModel.tflite")
 
-        //Once the driver hub is initialized
-        waitForStart();
-        //Once the driver hub is activated
-        if (opModeIsActive()) {
-            //Run the code in a sequence until asked to stop
-            while (!isStopRequested()) {
+                .setMaxNumRecognitions(4)
+                .setTrackerMaxOverlap(0.25f)
+                .setModelLabels(MODEL)
+                .setNumDetectorThreads(4)
+                .setNumExecutorThreads(4)
+//
+                .build();
 
-                //Claw grab pixel
-                ClawServo.setPosition(0.2);
-                sleep(500);
-                //GO forward
-                Drive(1250,1250,1250,1250,0.5);
-                sleep(2000);
-                //Claw release pixel
-                ClawServo.setPosition(0);
-                sleep(500);
-                //Go backward
-                Drive(-1100,-1100, -1100,-1100,0.5);
-                sleep(30000);
-                //Strafe left
-                Drive(-2000,2000,2000,-2000,0.5);
-                sleep(30000);
-                telemetry.update();
-            }
+        //Create the vision portal
+        VisionPortal.Builder builder = new VisionPortal.Builder();
+
+        // Set the camera (webcam).
+        builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
+
+        //Set and Enable processor
+        builder.addProcessor(tfod);
+
+        //Build VisionPortal
+        visionPortal = builder.build();
+    }
+    //Scan for any object the webcam recognizes
+    private boolean scanForObjects() {
+        List<Recognition> recognitions = tfod.getRecognitions();
+        numRecognize = recognitions.size();
+
+        telemetry.addData("# of Objects Detected", numRecognize);
+
+        if(recognitions.isEmpty()){
+            return false;
         }
+
+        //Go through a list of models and display label, confidence, position, and size for each
+        for(Recognition model : recognitions){
+            //Robot set the location and confidence here
+            position = (model.getLeft() + model.getRight()) / 2;
+            confidence = model.getConfidence();
+
+            telemetry.addData("", " ");
+            telemetry.addData("Object", "%s (%.Of %% COnf.)", model.getLabel(), model.getConfidence() * 100);
+            telemetry.addData("- Position", "%.Of", position);
+            telemetry.addData("- Size", "%.Of x %.Of", model.getWidth(), model.getHeight());
+            break;
+        }
+        return true;
     }
 }

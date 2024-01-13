@@ -26,7 +26,7 @@ public class ShortRed_Model extends LinearOpMode {
     private double position = -100000;
     //Separate the webcam's view into left, middle, and right sections
     private final double rightSignal = 270;
-    private final double leftSignal = -270;
+
     //Tensor flow object detection variable
     private TfodProcessor tfod;
     //Variable to create visionportal
@@ -36,7 +36,7 @@ public class ShortRed_Model extends LinearOpMode {
     //Variable to indicate how many object it recognizes
     private int numRecognize = 0;
 
-    //Create a list with the lable of our model
+    //Create a list with the label of our model
     private static final String[] MODEL = {"RedOwl"};
 
     @Override
@@ -70,7 +70,7 @@ public class ShortRed_Model extends LinearOpMode {
         waitForStart();
 
         //Robot go to the middle spike
-        if (position > leftSignal && position < rightSignal){
+       if (position > rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -85,7 +85,7 @@ public class ShortRed_Model extends LinearOpMode {
             sleep(30000);
         }
         //Robot go to the right spike
-        else if(position > rightSignal){
+        else if(position < rightSignal){
             //Go Forward
             Drive(1000, 1000, 1000, 1000, 0.5);
             sleep(2000);
@@ -104,7 +104,7 @@ public class ShortRed_Model extends LinearOpMode {
             telemetry.update();
         }
         //Robot go to the left spike
-        else if(position < leftSignal){
+        else if(confidence < 0.80){
             // Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
