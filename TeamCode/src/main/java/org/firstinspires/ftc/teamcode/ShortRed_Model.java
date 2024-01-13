@@ -11,7 +11,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-//hello
+
 @Autonomous(name = "ShortRed_Model")
 public class ShortRed_Model extends LinearOpMode {
 
