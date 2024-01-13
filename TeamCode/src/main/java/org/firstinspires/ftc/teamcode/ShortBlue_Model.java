@@ -11,7 +11,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
-
+//hello
 @Autonomous(name = "ShortBlue_Model")
 public class ShortBlue_Model extends LinearOpMode {
 
@@ -131,7 +131,6 @@ public class ShortBlue_Model extends LinearOpMode {
             sleep(30000);
         }
     }
-
     /**
      * @param FrontLTarget: the position desired for the front left wheel to turn towards
      * @param FrontRTarget: the position desired for the front right wheel to turn towards
