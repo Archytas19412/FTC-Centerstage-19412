@@ -70,7 +70,7 @@ public class ShortRed_Model extends LinearOpMode {
         waitForStart();
 
         //Robot go to the middle spike
-       if (position > rightSignal){
+       if (position < rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -83,9 +83,10 @@ public class ShortRed_Model extends LinearOpMode {
             //Strafe Right
             Drive(2000, -2000, -2000, 2000, 0.5);
             sleep(30000);
+            telemetry.update();
         }
-        //Robot go to the right spike
-        else if(position < rightSignal){
+        //Robot go to right spike
+       else if (position > rightSignal){
             //Go Forward
             Drive(1000, 1000, 1000, 1000, 0.5);
             sleep(2000);
@@ -103,8 +104,8 @@ public class ShortRed_Model extends LinearOpMode {
             sleep(30000);
             telemetry.update();
         }
-        //Robot go to the left spike
-        else if(confidence < 0.80){
+        //Robot go to left spike
+       else if (confidence < 0.80){
             // Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -129,6 +130,7 @@ public class ShortRed_Model extends LinearOpMode {
             //Strafe Right
             Drive(1800, -1800, -1800, 1800, 0.5);
             sleep(30000);
+           telemetry.update();
         }
     }
 

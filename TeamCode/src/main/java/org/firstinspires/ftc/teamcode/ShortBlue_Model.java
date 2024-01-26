@@ -70,7 +70,7 @@ public class ShortBlue_Model extends LinearOpMode {
         waitForStart();
 
         //Robot go to the middle spike
-        if (position < rightSignal){
+        if (position > rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -85,7 +85,7 @@ public class ShortBlue_Model extends LinearOpMode {
             sleep(30000);
         }
         //Robot go to the right spike
-        else if(position > rightSignal){
+        else if(position < rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -113,7 +113,7 @@ public class ShortBlue_Model extends LinearOpMode {
             telemetry.update();
         }
         //Robot go to the left spike
-        else if(confidence < 0.80){
+        else if (confidence < 0.80){
             // Go Forward
             Drive(1000, 1000, 1000, 1000, 0.5);
             sleep(2000);
