@@ -69,14 +69,50 @@ public class FarBlue_Model extends LinearOpMode {
 
         waitForStart();
 
+        //Robot go to the left spike
+        if(position == -100000 || confidence < 0.80){
+            // Go Forward
+            Drive(1250, 1250, 1250, 1250, 0.5);
+            sleep(2000);
+            // Turn Left
+            Drive(-1000, 1000, -1000, 1000, 0.5);
+            sleep(3000);
+            // Move Forward
+            Drive(100, 100, 100, 100, 0.5);
+            sleep(1000);
+            // Claw opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Move Backwards
+            Drive(-300, -300, -300, -300, 0.5);
+            sleep(30000);
+        }
         //Robot go to the middle spike
-        if (position < rightSignal){
+        else if (position < rightSignal){
+            // Go Forward
+            Drive(1250, 1250, 1250, 1250, 0.5);
+            sleep(2000);
+            // Open Claw
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Move Backwards
+            Drive(-300, -300, -300, -300, 0.5);
+            sleep(30000);
         }
         //Robot go to the right spike
         else if(position > rightSignal){
-        }
-        //Robot go to the left spike
-        else if(confidence < 0.80){
+            // Go Forward
+            Drive(1000, 1000, 1000, 1000, 0.5);
+            sleep(2000);
+            // Strafe Right
+            Drive(525, -525, -525, 525, 0.5);
+            sleep(2000);
+            // Open Claw
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Move Backwards
+            Drive(-500, -500, -500, -500, 0.5);
+            sleep(30000);
         }
     }
     /**

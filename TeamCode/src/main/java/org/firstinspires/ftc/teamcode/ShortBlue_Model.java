@@ -69,8 +69,26 @@ public class ShortBlue_Model extends LinearOpMode {
 
         waitForStart();
 
+        //Robot go to the left spike
+        if (position == -100000 || confidence < 0.80){
+            // Go Forward
+            Drive(1000, 1000, 1000, 1000, 0.5);
+            sleep(2000);
+            // Strafe Left
+            Drive(-525, 525, 525, -525, 0.5);
+            sleep(2000);
+            // Claw Opens
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Go Backward
+            Drive(-850, -850, -850, -850, 0.5);
+            sleep(3000);
+            //Strafe Left
+            Drive(-1475 ,1475, 1475, -1475, 0.5);
+            sleep(30000);
+        }
         //Robot go to the middle spike
-        if (position > rightSignal){
+        else if (position < rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -85,7 +103,7 @@ public class ShortBlue_Model extends LinearOpMode {
             sleep(30000);
         }
         //Robot go to the right spike
-        else if(position < rightSignal){
+        else if(position > rightSignal){
             //Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
@@ -112,25 +130,8 @@ public class ShortBlue_Model extends LinearOpMode {
             sleep(30000);
             telemetry.update();
         }
-        //Robot go to the left spike
-        else if (confidence < 0.80){
-            // Go Forward
-            Drive(1000, 1000, 1000, 1000, 0.5);
-            sleep(2000);
-            // Strafe Left
-            Drive(-525, 525, 525, -525, 0.5);
-            sleep(2000);
-            // Claw Opens
-            ClawServo.setPosition(0);
-            sleep(500);
-            // Go Backward
-            Drive(-850, -850, -850, -850, 0.5);
-            sleep(3000);
-            //Strafe Left
-            Drive(-1475 ,1475, 1475, -1475, 0.5);
-            sleep(30000);
-        }
     }
+
     /**
      * @param FrontLTarget: the position desired for the front left wheel to turn towards
      * @param FrontRTarget: the position desired for the front right wheel to turn towards

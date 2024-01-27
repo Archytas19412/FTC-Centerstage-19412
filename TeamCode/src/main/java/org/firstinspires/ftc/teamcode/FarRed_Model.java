@@ -69,73 +69,49 @@ public class FarRed_Model extends LinearOpMode {
 
         waitForStart();
 
+        //Robot go to the left spike
+        if(position == -100000 || confidence < 0.70){
+            // Go Forward
+            Drive(1000, 1000, 1000, 1000, 0.5);
+            sleep(2000);
+            // Strafe Left
+            Drive(-525, 525, 525, -525, 0.5);
+            sleep(2000);
+            //Open Claw
+            ClawServo.setPosition(0);
+            sleep(500);
+            // Move Backwards
+            Drive(-500, -500, -500, -500, 0.5);
+            sleep(30000);
+        }
         //Robot go to the middle spike
-        if (position > rightSignal){
+        else if (position < rightSignal){
             // Go Forward
             Drive(1250, 1250, 1250, 1250, 0.5);
             sleep(2000);
             // Open Claw
             ClawServo.setPosition(0);
             sleep(500);
-            // Go Backward
-            Drive(-1100, -1100, -1100, -1100, 0.5);
-            sleep(3000);
-            //Strafe Left
-            Drive(-700, 700, 700, -700, 0.5);
-            sleep(3000);
-            //Go Forward
-            Drive(2200, 2200, 2200, 2200, 0.5);
-            sleep(3500);
-            //Strafe Right
-            Drive(500, -500, -500, 500, 0.5);
-            sleep(1000);
-            //Turn Right
-            Drive(1125, -1125, 1125, -1125, 0.5);
-            sleep(3000);
-            //Go Forward
-            Drive(4000, 4000, 4000, 4000, 0.5);
+            // Go Backwards
+            Drive(-300, -300, -300, -300, 0.5);
             sleep(30000);
         }
         //Robot go to the right spike
-        else if(position < rightSignal){
+        else if(position > rightSignal){
+            // Go Forward
+            Drive(1200, 1200, 1200, 1200, 0.5);
+            sleep(2000);
             // Turn Right
-            Drive(1070, -1070, 1070, -1070, 0.5);
-            sleep(1500);
-            // Go Backward
-            Drive(-200, -200, -200, -200, 0.5);
-            sleep(500);
-            // Strafe Left
-            Drive(-1600, 1600, 1600, -1600, 0.5);
+            Drive(1000, -1000, 1000, -1000, 0.5);
             sleep(3000);
-            // Go Forward
+            // Move Forward
             Drive(100, 100, 100, 100, 0.5);
-            sleep(300);
-            // Open Claw
-            ClawServo.setPosition(0);
-            sleep(100);
-            // Go Backward
-            Drive(-100, -100, -100, -100, 0.5);
-            sleep(30000);
-        }
-        //Robot go to the left spike
-        else if(confidence < 0.80){
-            // Turn Left
-            Drive(-1070, 1070, -1070, 1070, 0.5);
-            sleep(1500);
-            // Go Forward
-            Drive(100, 100, 100, 100, 0.5);
-            sleep(100);
-            // Strafe Right
-            Drive(1600, -1600, -1600, 1600, 0.5);
-            sleep(3000);
-            // Go Forward
-            Drive(170, 170, 170, 170, 0.5);
             sleep(1000);
-            // Open Claw
+            // Claw opens
             ClawServo.setPosition(0);
             sleep(500);
-            // Go backwards
-            Drive(-100, -100, -100, -100, 0.5);
+            // Go Backward
+            Drive(-300, -300, -300, -300, 0.5);
             sleep(30000);
         }
     }
