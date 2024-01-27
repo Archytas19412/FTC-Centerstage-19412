@@ -14,7 +14,7 @@ import java.util.List;
 
 @Autonomous(name = "FarBlue_Model")
 public class FarBlue_Model extends LinearOpMode {
-//Hi
+
     //Motors and servo variables
     DcMotor FrontL;
     DcMotor BackL;

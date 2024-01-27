@@ -14,7 +14,7 @@ import java.util.List;
 
 @Autonomous(name = "ShortRed_Model")
 public class ShortRed_Model extends LinearOpMode {
-//Hi
+
     //Motors and servo variables
     DcMotor FrontL;
     DcMotor BackL;
