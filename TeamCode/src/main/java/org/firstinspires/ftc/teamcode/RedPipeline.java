@@ -8,8 +8,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-
-public class BluePipeline extends OpenCvPipeline {
+public class RedPipeline extends OpenCvPipeline {
 
     public enum PropPosition
     {
@@ -46,17 +45,17 @@ public class BluePipeline extends OpenCvPipeline {
             REGION3_TOPLEFT_ANCHOR_POINT.x + REGION_WIDTH,
             REGION3_TOPLEFT_ANCHOR_POINT.y + 125);
 
-    Mat region1_Cb, region2_Cb, region3_Cb;
+    Mat region1_Cr, region2_Cr, region3_Cr;
     Mat YCrCb = new Mat();
-    Mat Cb = new Mat();
+    Mat Cr = new Mat();
     int avg1, avg2, avg3;
 
     private volatile PropPosition position = PropPosition.LEFT;
 
-    void inputToCb(Mat input)
+    void inputToCr(Mat input)
     {
         Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
-        Core.extractChannel(YCrCb, Cb, 2);
+        Core.extractChannel(YCrCb, Cr, 1);
     }
 
 
@@ -64,11 +63,11 @@ public class BluePipeline extends OpenCvPipeline {
     public void init(Mat input) {
         // Executed before the first call to processFrame
 
-        inputToCb(input);
+        inputToCr(input);
 
-        region1_Cb = Cb.submat(new Rect(region1_pointA, region1_pointB));
-        region2_Cb = Cb.submat(new Rect(region2_pointA, region2_pointB));
-        region3_Cb = Cb.submat(new Rect(region3_pointA, region3_pointB));
+        region1_Cr = Cr.submat(new Rect(region1_pointA, region1_pointB));
+        region2_Cr = Cr.submat(new Rect(region2_pointA, region2_pointB));
+        region3_Cr = Cr.submat(new Rect(region3_pointA, region3_pointB));
 
     }
 
@@ -107,29 +106,29 @@ public class BluePipeline extends OpenCvPipeline {
          * should be positioned in the center of each of the first 3 stones, and
          * be small enough such that only the stone is sampled, and not any of the
          * surroundings.
-         */
 
 
-        /*
-         * Get the Cb channel of the input frame after conversion to YCrCb
-         */
-        inputToCb(input);
 
-        /*
-         * Compute the average pixel value of each submat region. We're
-         * taking the average of a single channel buffer, so the value
-         * we need is at index 0. We could have also taken the average
-         * pixel value of the 3-channel image, and referenced the value
-         * at index 2 here.
-         */
-        avg1 = (int) Core.mean(region1_Cb).val[0];
-        avg2 = (int) Core.mean(region2_Cb).val[0];
-        avg3 = (int) Core.mean(region3_Cb).val[0];
+/*
+ * Get the Cb channel of the input frame after conversion to YCrCb
+ */
+    inputToCr(input);
 
-        /*
-         * Draw a rectangle showing sample region 1 on the screen.
-         * Simply a visual aid. Serves no functional purpose.
-         */
+/*
+ * Compute the average pixel value of each submat region. We're
+ * taking the average of a single channel buffer, so the value
+ * we need is at index 0. We could have also taken the average
+ * pixel value of the 3-channel image, and referenced the value
+ * at index 2 here.
+ */
+        avg1 = (int) Core.mean(region1_Cr).val[0];
+        avg2 = (int) Core.mean(region2_Cr).val[0];
+        avg3 = (int) Core.mean(region3_Cr).val[0];
+
+/*
+ * Draw a rectangle showing sample region 1 on the screen.
+ * Simply a visual aid. Serves no functional purpose.
+ */
         Imgproc.rectangle(
                 input, // Buffer to draw on
                 region1_pointA, // First point which defines the rectangle
@@ -137,47 +136,47 @@ public class BluePipeline extends OpenCvPipeline {
                 BLUE, // The color the rectangle is drawn in
                 2); // Thickness of the rectangle lines
 
-        /*
-         * Draw a rectangle showing sample region 2 on the screen.
-         * Simply a visual aid. Serves no functional purpose.
-         */
+/*
+ * Draw a rectangle showing sample region 2 on the screen.
+ * Simply a visual aid. Serves no functional purpose.
+ */
         Imgproc.rectangle(
                 input, // Buffer to draw on
                 region2_pointA, // First point which defines the rectangle
                 region2_pointB, // Second point which defines the rectangle
                 BLUE, // The color the rectangle is drawn in
-                2); // Thickness of the rectangle lines*/
+                2); // Thickness of the rectangle lines
 
-        /*
-         * Draw a rectangle showing sample region 3 on the screen.
-         * Simply a visual aid. Serves no functional purpose.
-         */
+/*
+ * Draw a rectangle showing sample region 3 on the screen.
+ * Simply a visual aid. Serves no functional purpose.
+ */
         Imgproc.rectangle(
                 input, // Buffer to draw on
                 region3_pointA, // First point which defines the rectangle
                 region3_pointB, // Second point which defines the rectangle
                 BLUE, // The color the rectangle is drawn in
-                2); // Thickness of the rectangle lines*/
+                2); // Thickness of the rectangle lines
 
 
-        /*
-         * Find the max of the 3 averages
-         */
-                int maxOneTwo = Math.max(avg1, avg2);
-                int max = Math.max(maxOneTwo, avg3);
+/*
+ * Find the max of the 3 averages
+ */
+        int maxOneTwo = Math.max(avg1, avg2);
+        int max = Math.max(maxOneTwo, avg3);
 
-        /*
-         * Now that we found the max, we actually need to go and
-         * figure out which sample region that value was from
-         */
-                if(max == avg1) // Was it from region 1?
-                {
-                    position = PropPosition.LEFT; // Record our analysis
+/*
+ * Now that we found the max, we actually need to go and
+ * figure out which sample region that value was from
+ */
+if(max == avg1) // Was it from region 1?
+{
+position = PropPosition.LEFT; // Record our analysis
 
-            /*
-             * Draw a solid rectangle on top of the chosen region.
-             * Simply a visual aid. Serves no functional purpose.
-             */
+/*
+ * Draw a solid rectangle on top of the chosen region.
+ * Simply a visual aid. Serves no functional purpose.
+ */
             Imgproc.rectangle(
                     input, // Buffer to draw on
                     region1_pointA, // First point which defines the rectangle
@@ -188,11 +187,10 @@ public class BluePipeline extends OpenCvPipeline {
         else if(max == avg2) // Was it from region 2?
         {
             position = PropPosition.CENTER; // Record our analysis
-
-            /*
-             * Draw a solid rectangle on top of the chosen region.
-             * Simply a visual aid. Serves no functional purpose.
-             */
+/*
+ * Draw a solid rectangle on top of the chosen region.
+ * Simply a visual aid. Serves no functional purpose.
+ */
             Imgproc.rectangle(
                     input, // Buffer to draw on
                     region2_pointA, // First point which defines the rectangle
@@ -203,11 +201,10 @@ public class BluePipeline extends OpenCvPipeline {
         else if(max == avg3) // Was it from region 3?
         {
             position = PropPosition.RIGHT; // Record our analysis
-
-            /*
-             * Draw a solid rectangle on top of the chosen region.
-             * Simply a visual aid. Serves no functional purpose.
-             */
+/*
+ * Draw a solid rectangle on top of the chosen region.
+ * Simply a visual aid. Serves no functional purpose.
+ */
            Imgproc.rectangle(
                     input, // Buffer to draw on
                     region3_pointA, // First point which defines the rectangle
@@ -216,11 +213,11 @@ public class BluePipeline extends OpenCvPipeline {
                     -1); // Negative thickness means solid fill
         }
 
-        /*
-         * Render the 'input' buffer to the viewport. But note this is not
-         * simply rendering the raw camera feed, because we called functions
-         * to add some annotations to this buffer earlier up.
-         */
+/*
+ * Render the 'input' buffer to the viewport. But note this is not
+ * simply rendering the raw camera feed, because we called functions
+ * to add some annotations to this buffer earlier up.
+ */
         return input;
     }
 
