@@ -70,7 +70,7 @@ public class FarRed_Model extends LinearOpMode {
         waitForStart();
 
         //Robot go to the left spike
-        if(position == -100000 || confidence < 0.70){
+        if(position == -100000 || confidence < 0.80){
             // Go Forward
             Drive(1000, 1000, 1000, 1000, 0.5);
             sleep(2000);
