@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.BluePipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -14,7 +13,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class PipelineTest_Blue extends LinearOpMode {
+public class PipelineTest_ShortBlue extends LinearOpMode {
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
@@ -69,6 +68,8 @@ public class PipelineTest_Blue extends LinearOpMode {
         BackR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        ClawServo.setPosition(0.2);
+
         while (!isStarted() && !isStopRequested()) {
             position = bPropPL.returnPos();
             telemetry.addData("PROP FOUND @", position );
@@ -89,13 +90,62 @@ public class PipelineTest_Blue extends LinearOpMode {
             telemetry.update();
 
             if (position.toString().equals("LEFT")) {
-
+                // Go Forward
+                Drive(1000, 1000, 1000, 1000, 0.5);
+                sleep(2000);
+                // Strafe Left
+                Drive(-525, 525, 525, -525, 0.5);
+                sleep(2000);
+                // Claw Opens
+                ClawServo.setPosition(0);
+                sleep(500);
+                // Go Backward
+                Drive(-850, -850, -850, -850, 0.5);
+                sleep(3000);
+                //Strafe Left
+                Drive(-1475 ,1475, 1475, -1475, 0.5);
+                sleep(30000);
             }
             if (position.toString().equals("CENTER")) {
-
+                //Go Forward
+                Drive(1250, 1250, 1250, 1250, 0.5);
+                sleep(2000);
+                //Claw Opens
+                ClawServo.setPosition(0);
+                sleep(500);
+                //Go Backward
+                Drive(-1100, -1100, -1100, -1100, 0.5);
+                sleep(3000);
+                //Strafe Left
+                Drive(-2000, 2000, 2000, -2000, 0.5);
+                sleep(30000);
             }
             else {
-
+                //Go Forward
+                Drive(1250, 1250, 1250, 1250, 0.5);
+                sleep(2000);
+                //Turn Right
+                Drive(1000, -1000, 1000, -1000, 0.5);
+                sleep(3000);
+                //Go Forward
+                Drive(100, 100, 100, 100, 0.5);
+                sleep(1000);
+                //Claw Opens
+                ClawServo.setPosition(0);
+                sleep(500);
+                //Go Backwards
+                Drive(-300, -300, -300, -300, 0.5);
+                sleep(3000);
+                //Straighten Robot
+                Drive(-1000, 1000, -1000, 1000, 0.5);
+                sleep(3000);
+                //Go Backwards
+                Drive(-1100, -1100, -1100, -1100, 0.5);
+                sleep(3000);
+                //Strafe Left
+                Drive(-1800, 1800, 1800, -1800, 0.5);
+                sleep(30000);
+                telemetry.update();
             }
 
         }
