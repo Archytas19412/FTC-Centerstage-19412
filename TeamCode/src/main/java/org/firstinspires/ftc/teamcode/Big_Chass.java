@@ -79,10 +79,10 @@ public class Big_Chass extends OpMode {
 
         /* + forward/backward + strafe + turning (negative reverse wheel motion)
            # X ... =  set the power (below 1 makes it use less power, thus, go slower by nature)*/
-        BackR.setPower(1 * (vertical - (strafe - turn)));
-        FrontR.setPower(1 * (vertical + (strafe + turn)));
-        BackL.setPower(1 * (vertical + (strafe - turn)));
-        FrontL.setPower(1 * (vertical - (strafe + turn)));
+        BackR.setPower(0.8 * (vertical - (strafe - turn)));
+        FrontR.setPower(0.8 * (vertical + (strafe + turn)));
+        BackL.setPower(0.8 * (vertical + (strafe - turn)));
+        FrontL.setPower(0.8 * (vertical - (strafe + turn)));
 
         /*Gamepad1 Right Trigger = Turn the gears attach to the rope to reel the hook back
          *Gamepad1 Left Trigger = Turn the gears to release the rope
