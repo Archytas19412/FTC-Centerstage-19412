@@ -105,15 +105,47 @@ public class PipelineTest_FarBlueTest extends LinearOpMode {
             telemetry.update();
 
             if (position.toString().equals("LEFT")) {
-
+                // Go Forward
+                Drive(1250, 1250, 1250, 1250, 0.5);
+                sleep(2000);
+                // Turn Left
+                Drive(-1000, 1000, -1000, 1000, 0.5);
+                sleep(3000);
+                // Move Forward
+                Drive(100, 100, 100, 100, 0.5);
+                sleep(1000);
+                // Claw opens
+                ClawServo.setPosition(0);
+                sleep(500);
+                // Move Backwards
+                Drive(-300, -300, -300, -300, 0.5);
+                sleep(30000);
             }
             else if(position.toString().equals("CENTER")) {
-
+                // Go Forward
+                Drive(1250, 1250, 1250, 1250, 0.5);
+                sleep(2000);
+                // Open Claw
+                ClawServo.setPosition(0);
+                sleep(500);
+                // Move Backwards
+                Drive(-300, -300, -300, -300, 0.5);
+                sleep(30000);
             }
             else position.toString().equals("RIGHT"); {
-
+                // Go Forward
+                Drive(1000, 1000, 1000, 1000, 0.5);
+                sleep(2000);
+                // Strafe Right
+                Drive(525, -525, -525, 525, 0.5);
+                sleep(2000);
+                // Open Claw
+                ClawServo.setPosition(0);
+                sleep(500);
+                // Move Backwards
+                Drive(-500, -500, -500, -500, 0.5);
+                sleep(30000);
             }
-
         }
     }
     public void Drive(int FrontLTarget, int FrontRTarget, int BackLTarget, int BackRTarget, double Speed) {
