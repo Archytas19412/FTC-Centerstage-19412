@@ -15,8 +15,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class PipelineTest_ShortRedTest extends LinearOpMode {
-
+public class PipelineTest_ShortBlueTest extends LinearOpMode {
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
@@ -28,10 +27,10 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
     CRServo intake_Lift;
     CRServo IntakeServo;
     OpenCvWebcam webcam;
-    RedPipeline rPropPL;
+    BluePipeline bPropPL;
 
 
-    org.firstinspires.ftc.teamcode.RedPipeline.PropPosition position = null;
+    org.firstinspires.ftc.teamcode.BluePipeline.PropPosition position = null;
 
     @Override
     public void runOpMode() {
@@ -42,10 +41,11 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
          * webcam counterpart, {@link WebcamExample} first.
          */
 
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        rPropPL = new RedPipeline();
-        webcam.setPipeline(rPropPL);
+        bPropPL = new BluePipeline();
+        webcam.setPipeline(bPropPL);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -72,10 +72,10 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
         intake_Lift = hardwareMap.get(CRServo.class, "intake_Lift");
         IntakeServo = hardwareMap.get(CRServo.class, "IntakeServo");
 
+        FrontL.setDirection(DcMotor.Direction.REVERSE);
+        BackL.setDirection(DcMotor.Direction.REVERSE);
         UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
         ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
-        BackL.setDirection(DcMotorSimple.Direction.REVERSE);
-        FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Reduce slip in motors
         FrontL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -86,7 +86,7 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
         ClawServo.setPosition(0.2);
 
         while (!isStarted() && !isStopRequested()) {
-            position = rPropPL.returnPos();
+            position = bPropPL.returnPos();
             telemetry.addData("PROP FOUND @", position );
             telemetry.update();
             sleep(50);
@@ -113,49 +113,47 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
                 sleep(500);
                 Drive(-200, -200, -200, -200, 0.5);
                 sleep(1000);
-                Drive(525, -525, -525, 525, 0.5);
+                Drive(-525, 525, 525, -525, 0.5);
                 // Lower Intake Roller
                 sleep(1500);
-                Drive(1250, 1250, 1250, 1250, 0.5);
+                Drive(725, 725, 725, 725, 0.5);
                 sleep(1500);
-                Drive(-1125, 1125, -1125, 1125, 0.5);
-                sleep(1250);
-                Drive(275, 275, 275, 275, 0.5);
-                sleep(750);
+                // Intake Roll Out
                 IntakeServo.setPower(-1);
                 sleep(500);
                 // Intake Roller Stop Rolling
                 IntakeServo.setPower(0);
-                Drive(-300, -300, -300, -300, 0.5);
-                sleep(750);
-                Drive(2250, -2250, 2250, -2250, 0.55);
-                sleep(2000);
-                Drive(1000, 1000, 1000, 1000, 0.5);
-                sleep(1000);
-                Drive(-400, 400, 400, -400, 0.6);
+                Drive(-100, -100, -100, -100, 0.5);
                 sleep(500);
+                Drive(-725, 725, 725, -725, 0.5);
+                sleep(1500);
+                Drive(-1125, 1125, -1125, 1125, 0.5);
+                sleep(1500);
+                Drive(250, -250, -250, 250, 0.5);
+                sleep(500);
+                Drive(350, 350, 350, 350, 0.5);
+                sleep(500);
+                // Lift Arm
                 Lift_Arm(100, 100, 1);
                 sleep(1500);
                 // Extend Arm
                 Expand(2025, 0.8);
                 sleep(1500);
                 Lift_Arm(-100, 100, 0.5);
-                Drive(-250, -250, -250, -250, 0.2);
+                Drive(-275, -275, -275, -275, 0.2);
                 sleep(1500);
                 // Open Claw
                 ClawServo.setPosition(0);
-                sleep(500);
-                Expand(-2025, 1);
-                Lift_Arm(100, 100, 0.75);
                 sleep(1000);
+                Lift_Arm(100, 100, 0.75);
+                Expand(-2025, 1);
+                sleep(1500);
                 Lift_Arm(-100, 100, 0.75);
                 ClawServo.setPosition(0.2);
-                Drive(1700, -1700, -1700, 1700, 0.8);
-                sleep(2000);
-                Drive(800, 800, 800, 800, 0.8);
+                Drive(-1100, 1100, 1100, -1100, 0.5);
                 sleep(30000);
             }
-            else if (position.toString().equals("CENTER")) {
+            else if(position.toString().equals("CENTER")) {
                 // Go Forward
                 intake_Lift.setPower(1);
                 sleep(2650);
@@ -174,11 +172,11 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
                 IntakeServo.setPower(0);
                 Drive(-100, -100, -100, -100, 0.5);
                 sleep(500);
-                Drive(1250, -1250, -1250, 1250, 0.5);
+                Drive(-1250, 1250, 1250, -1250, 0.5);
                 sleep(1500);
-                Drive(1125, -1125, 1125, -1125, 0.5);
+                Drive(-1125, 1125, -1125, 1125, 0.5);
                 sleep(1500);
-                Drive(-400, 400, 400, -400, 0.5);
+                Drive(400, -400, -400, 400, 0.5);
                 sleep(500);
                 Drive(350, 350, 350, 350, 0.5);
                 sleep(500);
@@ -199,10 +197,10 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
                 Expand(-2025, 1);
                 sleep(1500);
                 Lift_Arm(-100, 100, 0.75);
-                Drive(1250, -1250, -1250, 1250, 0.5);
+                Drive(-1250, 1250, 1250, -1250, 0.5);
                 sleep(30000);
             }
-            else position.toString().equals("RIGHT");{
+            else position.toString().equals("RIGHT"); {
                 // Go Forward
                 intake_Lift.setPower(1);
                 sleep(2650);
@@ -211,57 +209,51 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
                 sleep(500);
                 Drive(-200, -200, -200, -200, 0.5);
                 sleep(1000);
-                Drive(525, -525, -525, 525, 0.5);
+                Drive(-525, 525, 525, -525, 0.5);
                 // Lower Intake Roller
                 sleep(1500);
-                Drive(725, 725, 725, 725, 0.5);
+                Drive(1250, 1250, 1250, 1250, 0.5);
                 sleep(1500);
-                // Intake Roll Out
+                Drive(1125, -1125, 1125, -1125, 0.5);
+                sleep(1250);
+                Drive(275, 275, 275, 275, 0.5);
+                sleep(750);
                 IntakeServo.setPower(-1);
                 sleep(500);
                 // Intake Roller Stop Rolling
                 IntakeServo.setPower(0);
-                Drive(-100, -100, -100, -100, 0.5);
+                Drive(-300, -300, -300, -300, 0.5);
+                sleep(750);
+                Drive(-2250, 2250, -2250, 2250, 0.55);
+                sleep(2000);
+                Drive(1000, 1000, 1000, 1000, 0.5);
+                sleep(1000);
+                Drive(400, -400, -400, 400, 0.6);
                 sleep(500);
-                Drive(725, -725, -725, 725, 0.5);
-                sleep(1500);
-                Drive(1125, -1125, 1125, -1125, 0.5);
-                sleep(1500);
-                Drive(-250, 250, 250, -250, 0.5);
-                sleep(500);
-                Drive(350, 350, 350, 350, 0.5);
-                sleep(500);
-                // Lift Arm
                 Lift_Arm(100, 100, 1);
                 sleep(1500);
                 // Extend Arm
                 Expand(2025, 0.8);
                 sleep(1500);
                 Lift_Arm(-100, 100, 0.5);
-                Drive(-275, -275, -275, -275, 0.2);
+                Drive(-250, -250, -250, -250, 0.2);
                 sleep(1500);
                 // Open Claw
                 ClawServo.setPosition(0);
-                sleep(1000);
-                Lift_Arm(100, 100, 0.75);
+                sleep(500);
                 Expand(-2025, 1);
-                sleep(1500);
+                Lift_Arm(100, 100, 0.75);
+                sleep(1000);
                 Lift_Arm(-100, 100, 0.75);
                 ClawServo.setPosition(0.2);
-                Drive(1100, -1100, -1100, 1100, 0.5);
+                Drive(-1700, 1700, 1700, -1700, 0.8);
+                sleep(2000);
+                Drive(800, 800, 800, 800, 0.8);
                 sleep(30000);
             }
 
         }
     }
-
-    /**
-     * @param FrontLTarget: amount of ticks for the front left wheel (+ = forward & - = backwards)
-     * @param FrontRTarget: amount of ticks for the front right wheel (+ = forward & - = backwards)
-     * @param BackLTarget: amount of ticks for the back left wheel (+ = forward & - = backwards)
-     * @param BackRTarget: amount of ticks for the back right wheel (+ = forward & - = backwards)
-     * @param Speed: the speed/power of all the motors
-     */
     public void Drive(int FrontLTarget, int FrontRTarget, int BackLTarget, int BackRTarget, double Speed) {
         FrontL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -283,7 +275,6 @@ public class PipelineTest_ShortRedTest extends LinearOpMode {
         BackL.setPower(Speed);
         BackR.setPower(Speed);
     }
-
     /**
      * @param ExpandArmTarget: amount of ticks for the arm to extend (+ = forward & - = backwards)
      * @param Speed: speed/power of the motor

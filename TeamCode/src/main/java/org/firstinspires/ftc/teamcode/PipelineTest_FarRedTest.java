@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -13,16 +15,23 @@ import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous
-public class PipelineTest_ShortBlue extends LinearOpMode {
+public class PipelineTest_FarRedTest extends LinearOpMode {
+
     DcMotor FrontL;
     DcMotor BackL;
     DcMotor BackR;
     DcMotor FrontR;
+    DcMotor UpArm;
+    DcMotor UpArm2;
+    DcMotor ExpandArm;
     Servo ClawServo;
+    CRServo intake_Lift;
+    CRServo IntakeServo;
     OpenCvWebcam webcam;
-    BluePipeline bPropPL;
+    RedPipeline rPropPL;
 
-    org.firstinspires.ftc.teamcode.BluePipeline.PropPosition position = null;
+
+    org.firstinspires.ftc.teamcode.RedPipeline.PropPosition position = null;
 
     @Override
     public void runOpMode() {
@@ -33,11 +42,10 @@ public class PipelineTest_ShortBlue extends LinearOpMode {
          * webcam counterpart, {@link WebcamExample} first.
          */
 
-
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        bPropPL = new BluePipeline();
-        webcam.setPipeline(bPropPL);
+        rPropPL = new RedPipeline();
+        webcam.setPipeline(rPropPL);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -57,10 +65,17 @@ public class PipelineTest_ShortBlue extends LinearOpMode {
         BackL = hardwareMap.get(DcMotor.class, "BackL");
         BackR = hardwareMap.get(DcMotor.class, "BackR");
         FrontR = hardwareMap.get(DcMotor.class, "FrontR");
+        UpArm = hardwareMap.get(DcMotor.class, "UpArm");
+        UpArm2 = hardwareMap.get(DcMotor.class, "UpArm2");
+        ExpandArm = hardwareMap.get(DcMotor.class, "ExpandArm");
         ClawServo = hardwareMap.get(Servo.class, "ClawServo");
+        intake_Lift = hardwareMap.get(CRServo.class, "intake_Lift");
+        IntakeServo = hardwareMap.get(CRServo.class, "IntakeServo");
 
-        FrontL.setDirection(DcMotor.Direction.REVERSE);
-        BackL.setDirection(DcMotor.Direction.REVERSE);
+        UpArm2.setDirection(DcMotorSimple.Direction.REVERSE);
+        ExpandArm.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackL.setDirection(DcMotorSimple.Direction.REVERSE);
+        FrontL.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Reduce slip in motors
         FrontL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -71,7 +86,7 @@ public class PipelineTest_ShortBlue extends LinearOpMode {
         ClawServo.setPosition(0.2);
 
         while (!isStarted() && !isStopRequested()) {
-            position = bPropPL.returnPos();
+            position = rPropPL.returnPos();
             telemetry.addData("PROP FOUND @", position );
             telemetry.update();
             sleep(50);
@@ -90,66 +105,25 @@ public class PipelineTest_ShortBlue extends LinearOpMode {
             telemetry.update();
 
             if (position.toString().equals("LEFT")) {
-                // Go Forward
-                Drive(1000, 1000, 1000, 1000, 0.5);
-                sleep(2000);
-                // Strafe Left
-                Drive(-525, 525, 525, -525, 0.5);
-                sleep(2000);
-                // Claw Opens
-                ClawServo.setPosition(0);
-                sleep(500);
-                // Go Backward
-                Drive(-850, -850, -850, -850, 0.5);
-                sleep(3000);
-                //Strafe Left
-                Drive(-1475 ,1475, 1475, -1475, 0.5);
-                sleep(30000);
+
             }
-            if (position.toString().equals("CENTER")) {
-                //Go Forward
-                Drive(1250, 1250, 1250, 1250, 0.5);
-                sleep(2000);
-                //Claw Opens
-                ClawServo.setPosition(0);
-                sleep(500);
-                //Go Backward
-                Drive(-1100, -1100, -1100, -1100, 0.5);
-                sleep(3000);
-                //Strafe Left
-                Drive(-2000, 2000, 2000, -2000, 0.5);
-                sleep(30000);
+            else if (position.toString().equals("CENTER")) {
+
             }
-            else {
-                //Go Forward
-                Drive(1250, 1250, 1250, 1250, 0.5);
-                sleep(2000);
-                //Turn Right
-                Drive(1000, -1000, 1000, -1000, 0.5);
-                sleep(3000);
-                //Go Forward
-                Drive(100, 100, 100, 100, 0.5);
-                sleep(1000);
-                //Claw Opens
-                ClawServo.setPosition(0);
-                sleep(500);
-                //Go Backwards
-                Drive(-300, -300, -300, -300, 0.5);
-                sleep(3000);
-                //Straighten Robot
-                Drive(-1000, 1000, -1000, 1000, 0.5);
-                sleep(3000);
-                //Go Backwards
-                Drive(-1100, -1100, -1100, -1100, 0.5);
-                sleep(3000);
-                //Strafe Left
-                Drive(-1800, 1800, 1800, -1800, 0.5);
-                sleep(30000);
-                telemetry.update();
+            else position.toString().equals("RIGHT");{
+
             }
 
         }
     }
+
+    /**
+     * @param FrontLTarget: amount of ticks for the front left wheel (+ = forward & - = backwards)
+     * @param FrontRTarget: amount of ticks for the front right wheel (+ = forward & - = backwards)
+     * @param BackLTarget: amount of ticks for the back left wheel (+ = forward & - = backwards)
+     * @param BackRTarget: amount of ticks for the back right wheel (+ = forward & - = backwards)
+     * @param Speed: the speed/power of all the motors
+     */
     public void Drive(int FrontLTarget, int FrontRTarget, int BackLTarget, int BackRTarget, double Speed) {
         FrontL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -170,15 +144,32 @@ public class PipelineTest_ShortBlue extends LinearOpMode {
         FrontR.setPower(Speed);
         BackL.setPower(Speed);
         BackR.setPower(Speed);
+    }
 
-        // Blocking While Loop: doesn't break until all 4 motors have stopped moving
-        // Sets power of motors to 0 after the loop breaks
-        while (opModeIsActive() && (BackR.isBusy() || BackL.isBusy() || FrontR.isBusy() || FrontL.isBusy())) {
-        }
+    /**
+     * @param ExpandArmTarget: amount of ticks for the arm to extend (+ = forward & - = backwards)
+     * @param Speed: speed/power of the motor
+     */
+    private void Expand(int ExpandArmTarget, double Speed) {
+        ExpandArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ExpandArm.setTargetPosition(ExpandArmTarget);
+        ExpandArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ExpandArm.setPower(Speed);
+    }
 
-        FrontL.setPower(0);
-        FrontR.setPower(0);
-        BackL.setPower(0);
-        BackR.setPower(0);
+    /**
+     * @param UpArmTarget: amount of ticks for one of the motor lifting the arm (+ = forward & - = backwards)
+     * @param UpArm2Target: amount of ticks for one of the motor lifting the arm (+ = forward & - = backwards)
+     * @param Speed: the speed/power for all the motors
+     */
+    private void Lift_Arm(int UpArmTarget, int UpArm2Target, double Speed) {
+        UpArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        UpArm2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        UpArm.setTargetPosition(UpArmTarget);
+        UpArm2.setTargetPosition(UpArm2Target);
+        UpArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        UpArm2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        UpArm.setPower(Speed);
+        UpArm2.setPower(Speed);
     }
 }
